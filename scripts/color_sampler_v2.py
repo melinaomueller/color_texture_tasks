@@ -198,11 +198,12 @@ def place_ring_crops(arr, anchor_cx, anchor_cy, radii, crop_size,
 
 
 def process_image_v2(arr, folder, img_id, crop_size, crops_out, mosaics_out,
-                     black_thresh, min_content, tile_size, min_tile_std=0.0):
-    """Orchestrate anchors -> rings -> save crops + mosaics for one image.
+                     black_thresh, min_content, tile_size, min_tile_std=0.0,
+                     make_mosaics=True):
+    """Orchestrate anchors -> rings -> save crops (+ mosaics) for one image.
 
-    If min_tile_std > 0, mosaics with color std below the threshold are
-    rejected (crop and mosaic are not saved).
+    If make_mosaics is True, generates mosaic-scrambled versions and applies
+    the variance filter (min_tile_std). If False, saves crops only.
     """
     h, w = arr.shape[:2]
 
@@ -227,37 +228,42 @@ def process_image_v2(arr, folder, img_id, crop_size, crops_out, mosaics_out,
         )
 
         for ring_idx, crop_idx, crop_arr in ring_crops:
-            mosaic = mean_color_mosaic(crop_arr, tile_size, black_thresh)
+            if make_mosaics:
+                mosaic = mean_color_mosaic(crop_arr, tile_size, black_thresh)
 
-            # Variance filter: reject homogeneous mosaics
-            if min_tile_std > 0:
-                tile_colors = mosaic_tile_colors(mosaic, tile_size)
-                std_val = mosaic_color_std(tile_colors)
-                if std_val < min_tile_std:
-                    total_rejected += 1
-                    continue
+                # Variance filter: reject homogeneous mosaics
+                if min_tile_std > 0:
+                    tile_colors = mosaic_tile_colors(mosaic, tile_size)
+                    std_val = mosaic_color_std(tile_colors)
+                    if std_val < min_tile_std:
+                        total_rejected += 1
+                        continue
 
             fname = f"{folder}_{img_id:04d}_a{ai}_r{ring_idx}_c{crop_idx}.png"
             Image.fromarray(crop_arr).save(os.path.join(crops_out, fname))
             total_crops += 1
 
-            Image.fromarray(mosaic).save(
-                os.path.join(mosaics_out, f"mosaic_{fname}"))
-            total_mosaics += 1
+            if make_mosaics:
+                Image.fromarray(mosaic).save(
+                    os.path.join(mosaics_out, f"mosaic_{fname}"))
+                total_mosaics += 1
 
     return total_crops, total_mosaics, total_rejected
 
 
-def process_trials_v2(trials, task_label, min_tile_std=0.0):
+def process_trials_v2(trials, task_label, min_tile_std=0.0, make_mosaics=True):
     """Loop over all trials, call process_image_v2 for each."""
     print("=" * 60)
     print(f"V2 STRUCTURED RINGS — {task_label.upper()}")
     print("=" * 60)
-    if min_tile_std > 0:
+    if make_mosaics and min_tile_std > 0:
         print(f"  Variance filter: min_tile_std = {min_tile_std:.1f} LAB units")
+    if not make_mosaics:
+        print("  Crops only (no mosaics)")
 
     os.makedirs(V2_CROPS_OUT, exist_ok=True)
-    os.makedirs(V2_MOSAICS_OUT, exist_ok=True)
+    if make_mosaics:
+        os.makedirs(V2_MOSAICS_OUT, exist_ok=True)
 
     grand_crops = 0
     grand_mosaics = 0
@@ -275,6 +281,7 @@ def process_trials_v2(trials, task_label, min_tile_std=0.0):
             V2_CROPS_OUT, V2_MOSAICS_OUT,
             BLACK_THRESH, MIN_CONTENT, TILE_SIZE,
             min_tile_std=min_tile_std,
+            make_mosaics=make_mosaics,
         )
         grand_crops += nc
         grand_mosaics += nm
@@ -283,9 +290,10 @@ def process_trials_v2(trials, task_label, min_tile_std=0.0):
             print(f"    accepted={nc}, rejected={nr}")
 
     print(f"  -> {grand_crops} crops saved to {V2_CROPS_OUT}/")
-    print(f"  -> {grand_mosaics} mosaics saved to {V2_MOSAICS_OUT}/")
-    if grand_rejected > 0:
-        print(f"  -> {grand_rejected} mosaics rejected (below variance threshold)")
+    if make_mosaics:
+        print(f"  -> {grand_mosaics} mosaics saved to {V2_MOSAICS_OUT}/")
+        if grand_rejected > 0:
+            print(f"  -> {grand_rejected} mosaics rejected (below variance threshold)")
     print()
 
 
@@ -326,10 +334,11 @@ def _find_best_distractor_triplet(distance_matrix, indices):
     return best_triplet, best_avg
 
 
-def assemble_trials(mosaics_dir, max_trials_per_image=3,
+def assemble_trials(mosaics_dir, color_trials, max_trials_per_image=3,
                     min_oddball_distance=0.02):
     """Assemble 4AFC oddball trials from filtered mosaics.
 
+    Only mosaics whose category matches a color trial are included.
     Groups mosaics by (category, image_id), computes pairwise color
     distances, finds distractor triplets, and selects oddballs at
     easy/medium/hard difficulty levels. Writes v2_trials.csv.
@@ -338,8 +347,15 @@ def assemble_trials(mosaics_dir, max_trials_per_image=3,
     print("TRIAL ASSEMBLY")
     print("=" * 60)
 
-    # Collect mosaic files grouped by (category, image_id)
+    # Build set of (resolved_folder, image_id_str) from color trials
+    color_keys = set()
+    for name, img_id in color_trials:
+        folder = resolve_folder_name(name)
+        color_keys.add((folder, f"{img_id:04d}"))
+
+    # Collect mosaic files grouped by (category, image_id), color only
     groups = {}
+    skipped = 0
     for fname in sorted(os.listdir(mosaics_dir)):
         if not fname.endswith('.png'):
             continue
@@ -347,11 +363,14 @@ def assemble_trials(mosaics_dir, max_trials_per_image=3,
         if parsed is None:
             continue
         category, img_id = parsed
+        if (category, img_id) not in color_keys:
+            skipped += 1
+            continue
         key = (category, img_id)
         groups.setdefault(key, []).append(fname)
 
-    print(f"  Found {sum(len(v) for v in groups.values())} mosaics "
-          f"across {len(groups)} image groups")
+    print(f"  Found {sum(len(v) for v in groups.values())} color mosaics "
+          f"across {len(groups)} image groups (skipped {skipped} texture mosaics)")
 
     trials_csv = os.path.join(os.path.dirname(mosaics_dir), "v2_trials.csv")
     trial_rows = []
@@ -474,10 +493,15 @@ def main():
                         help="Max trials assembled per source image (default: 3)")
     parser.add_argument("--min-oddball-distance", type=float, default=0.02,
                         help="Min color distance for an oddball to be usable (default: 0.02)")
+    parser.add_argument("--seed", type=int, default=RANDOM_SEED,
+                        help=f"Random seed for reproducibility (default: {RANDOM_SEED})")
+    parser.add_argument("--regenerate-original", action="store_true",
+                        help="Reproduce the original v2 run (mosaics for all, no filter)")
     args = parser.parse_args()
 
-    if RANDOM_SEED is not None:
-        np.random.seed(RANDOM_SEED)
+    seed = args.seed
+    np.random.seed(seed)
+    print(f"Random seed: {seed}")
 
     texture_trials = read_trials(MATERIALS_LIST, "texture") + EXTRA_TEXTURE_TRIALS
     color_trials = read_trials(MATERIALS_LIST, "color")
@@ -489,12 +513,19 @@ def main():
     print(f"Texture trials: {len(texture_trials)}")
     print(f"Color trials:   {len(color_trials)}\n")
 
-    process_trials_v2(texture_trials, "texture", min_tile_std=args.min_tile_std)
-    process_trials_v2(color_trials, "color", min_tile_std=args.min_tile_std)
+    if args.regenerate_original:
+        # Reproduce the original v2 run: mosaics for all, no variance filter
+        print("** REGENERATE-ORIGINAL MODE: mosaics for all, no filter **\n")
+        process_trials_v2(texture_trials, "texture", make_mosaics=True)
+        process_trials_v2(color_trials, "color", make_mosaics=True)
+    else:
+        process_trials_v2(texture_trials, "texture", make_mosaics=False)
+        process_trials_v2(color_trials, "color", min_tile_std=args.min_tile_std, make_mosaics=True)
 
     if args.assemble_trials:
         assemble_trials(
             V2_MOSAICS_OUT,
+            color_trials,
             max_trials_per_image=args.max_trials_per_image,
             min_oddball_distance=args.min_oddball_distance,
         )
