@@ -1,0 +1,24 @@
+trial_id: 82
+source: crepe_paper/0841
+n_colors: 4
+difficulty_shift: 0.15
+distractor_proportions: 0.4311, 0.2900, 0.1763, 0.1026
+oddball_proportions: 0.3561, 0.2900, 0.1763, 0.1776
+
+[original]
+  color_1: RGB(202, 208, 82) prop=0.4311
+  color_2: RGB(167, 216, 226) prop=0.2900
+  color_3: RGB(208, 205, 190) prop=0.1763
+  color_4: RGB(66, 103, 177) prop=0.1026
+
+[lum_eq]
+  color_1: RGB(178, 185, 60) prop=0.4311
+  color_2: RGB(138, 186, 196) prop=0.2900
+  color_3: RGB(182, 179, 164) prop=0.1763
+  color_4: RGB(147, 176, 255) prop=0.1026
+
+[chroma_boost_lum_eq]
+  color_1: RGB(169, 189, 0) prop=0.4311
+  color_2: RGB(111, 190, 205) prop=0.2900
+  color_3: RGB(183, 179, 157) prop=0.1763
+  color_4: RGB(113, 176, 255) prop=0.1026

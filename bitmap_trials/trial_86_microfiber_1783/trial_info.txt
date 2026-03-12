@@ -1,0 +1,21 @@
+trial_id: 86
+source: microfiber/1783
+n_colors: 3
+difficulty_shift: 0.10
+distractor_proportions: 0.3657, 0.3220, 0.3123
+oddball_proportions: 0.3157, 0.3720, 0.3123
+
+[original]
+  color_1: RGB(240, 139, 5) prop=0.3657
+  color_2: RGB(191, 45, 148) prop=0.3220
+  color_3: RGB(13, 65, 143) prop=0.3123
+
+[lum_eq]
+  color_1: RGB(177, 88, 0) prop=0.3657
+  color_2: RGB(196, 50, 152) prop=0.3220
+  color_3: RGB(80, 108, 193) prop=0.3123
+
+[chroma_boost_lum_eq]
+  color_1: RGB(198, 71, 0) prop=0.3657
+  color_2: RGB(233, 0, 172) prop=0.3220
+  color_3: RGB(0, 107, 234) prop=0.3123

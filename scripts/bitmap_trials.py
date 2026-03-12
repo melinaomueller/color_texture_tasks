@@ -65,12 +65,20 @@ def load_stuff_image(category, image_id):
 
 # ── PALETTE EXTRACTION ───────────────────────────────────────────────────────
 
-def extract_palette(image_arr, k=5, seed=42):
+def extract_palette(image_arr, k=5, seed=42, min_lightness=0):
     """Extract k dominant colors and their proportions via k-means.
 
+    Args:
+        image_arr: (H, W, 3) uint8 RGB image
+        k: number of clusters
+        seed: random seed for reproducibility
+        min_lightness: minimum L* value (0-100). Colors below this are
+            dropped and their proportions redistributed. Use e.g. 10
+            to exclude near-black colors.
+
     Returns:
-        colors: (k, 3) uint8 RGB array
-        proportions: (k,) float array summing to 1.0, sorted descending
+        colors: (n, 3) uint8 RGB array (n <= k after filtering)
+        proportions: (n,) float array summing to 1.0, sorted descending
     """
     pixels = image_arr.reshape(-1, 3).astype(np.float64)
 
@@ -93,6 +101,16 @@ def extract_palette(image_arr, k=5, seed=42):
     proportions = proportions[order]
 
     colors = np.clip(np.round(centroids), 0, 255).astype(np.uint8)
+
+    # Filter out dark colors if min_lightness is set
+    if min_lightness > 0:
+        lab = rgb2lab(colors.reshape(1, -1, 3).astype(np.float64) / 255.0)[0]
+        keep = lab[:, 0] >= min_lightness
+        if keep.sum() >= 2:  # keep at least 2 colors
+            colors = colors[keep]
+            proportions = proportions[keep]
+            proportions /= proportions.sum()
+
     return colors, proportions
 
 
@@ -440,11 +458,17 @@ def process_batch(csv_path, output_dir, palettes_only=False, seed=RANDOM_SEED):
         difficulty = float(row["difficulty"])
         n_colors = int(row["n_colors"])
         chroma_boost = float(row.get("chroma_boost") or CHROMA_BOOST_FACTOR)
+        min_lightness = float(row.get("min_lightness") or 0)
+
+        extras = []
+        if chroma_boost != CHROMA_BOOST_FACTOR:
+            extras.append(f"chroma={chroma_boost}x")
+        if min_lightness > 0:
+            extras.append(f"min_L={min_lightness}")
+        extra_str = f", {', '.join(extras)}" if extras else ""
 
         print(f"  Trial {trial_id:02d}: {category}/{image_id} "
-              f"(k={n_colors}, shift={difficulty:.2f}"
-              f"{f', chroma={chroma_boost}x' if chroma_boost != CHROMA_BOOST_FACTOR else ''}"
-              f") ... ", end="")
+              f"(k={n_colors}, shift={difficulty:.2f}{extra_str}) ... ", end="")
 
         # Load source image
         arr = load_stuff_image(category, image_id)
@@ -453,8 +477,9 @@ def process_batch(csv_path, output_dir, palettes_only=False, seed=RANDOM_SEED):
             fail_count += 1
             continue
 
-        # Extract k=5 palette (always)
-        colors, proportions = extract_palette(arr, k=5, seed=seed)
+        # Extract k=5 palette (always), optionally filtering dark colors
+        colors, proportions = extract_palette(
+            arr, k=5, seed=seed, min_lightness=min_lightness)
 
         if palettes_only:
             # Save palette PNG only

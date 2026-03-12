@@ -1,0 +1,21 @@
+trial_id: 80
+source: soap/2870
+n_colors: 3
+difficulty_shift: 0.10
+distractor_proportions: 0.3813, 0.3237, 0.2950
+oddball_proportions: 0.3313, 0.3237, 0.3450
+
+[original]
+  color_1: RGB(203, 167, 139) prop=0.3813
+  color_2: RGB(172, 178, 196) prop=0.3237
+  color_3: RGB(230, 235, 239) prop=0.2950
+
+[lum_eq]
+  color_1: RGB(225, 188, 160) prop=0.3813
+  color_2: RGB(189, 195, 213) prop=0.3237
+  color_3: RGB(191, 196, 200) prop=0.2950
+
+[chroma_boost_lum_eq]
+  color_1: RGB(238, 185, 142) prop=0.3813
+  color_2: RGB(185, 195, 222) prop=0.3237
+  color_3: RGB(189, 196, 202) prop=0.2950

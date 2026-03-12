@@ -1,0 +1,27 @@
+trial_id: 85
+source: flannel/1057
+n_colors: 5
+difficulty_shift: 0.15
+distractor_proportions: 0.3442, 0.2486, 0.2123, 0.1147, 0.0801
+oddball_proportions: 0.2692, 0.2486, 0.2873, 0.1147, 0.0801
+
+[original]
+  color_1: RGB(61, 58, 71) prop=0.3442
+  color_2: RGB(112, 110, 111) prop=0.2486
+  color_3: RGB(198, 153, 114) prop=0.2123
+  color_4: RGB(146, 80, 71) prop=0.1147
+  color_5: RGB(202, 197, 196) prop=0.0801
+
+[lum_eq]
+  color_1: RGB(126, 122, 137) prop=0.3442
+  color_2: RGB(125, 123, 124) prop=0.2486
+  color_3: RGB(157, 116, 78) prop=0.2123
+  color_4: RGB(175, 105, 95) prop=0.1147
+  color_5: RGB(128, 123, 122) prop=0.0801
+
+[chroma_boost_lum_eq]
+  color_1: RGB(126, 121, 143) prop=0.3442
+  color_2: RGB(126, 123, 125) prop=0.2486
+  color_3: RGB(169, 111, 54) prop=0.2123
+  color_4: RGB(195, 93, 81) prop=0.1147
+  color_5: RGB(129, 123, 121) prop=0.0801
