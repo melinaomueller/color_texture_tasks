@@ -2,26 +2,23 @@ trial_id: 14
 source: moss/1832
 n_colors: 5
 difficulty_shift: 0.25
-distractor_proportions: 0.2447, 0.2365, 0.2055, 0.2032, 0.1101
-oddball_proportions: 0.1197, 0.2365, 0.3305, 0.2032, 0.1101
+distractor_proportions: 0.3072, 0.2968, 0.2579, 0.1382
+oddball_proportions: 0.1822, 0.2968, 0.3829, 0.1382
 
 [original]
-  color_1: RGB(43, 65, 9) prop=0.2447
-  color_2: RGB(69, 97, 15) prop=0.2365
-  color_3: RGB(98, 130, 24) prop=0.2055
-  color_4: RGB(17, 32, 5) prop=0.2032
-  color_5: RGB(131, 166, 41) prop=0.1101
+  color_1: RGB(43, 65, 9) prop=0.3072
+  color_2: RGB(69, 97, 15) prop=0.2968
+  color_3: RGB(98, 130, 24) prop=0.2579
+  color_4: RGB(131, 166, 41) prop=0.1382
 
 [lum_eq]
-  color_1: RGB(73, 95, 38) prop=0.2447
-  color_2: RGB(68, 96, 14) prop=0.2365
-  color_3: RGB(64, 97, 0) prop=0.2055
-  color_4: RGB(75, 93, 66) prop=0.2032
-  color_5: RGB(60, 98, 0) prop=0.1101
+  color_1: RGB(89, 111, 54) prop=0.3072
+  color_2: RGB(85, 113, 32) prop=0.2968
+  color_3: RGB(82, 114, 1) prop=0.2579
+  color_4: RGB(78, 115, 0) prop=0.1382
 
 [chroma_boost_lum_eq]
-  color_1: RGB(61, 98, 0) prop=0.2447
-  color_2: RGB(50, 100, 0) prop=0.2365
-  color_3: RGB(41, 101, 0) prop=0.2055
-  color_4: RGB(67, 95, 55) prop=0.2032
-  color_5: RGB(33, 102, 0) prop=0.1101
+  color_1: RGB(78, 115, 21) prop=0.3072
+  color_2: RGB(68, 117, 0) prop=0.2968
+  color_3: RGB(59, 119, 0) prop=0.2579
+  color_4: RGB(51, 120, 0) prop=0.1382

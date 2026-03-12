@@ -1,0 +1,24 @@
+trial_id: 5
+source: emerald/0938
+n_colors: 4
+difficulty_shift: 0.30
+distractor_proportions: 0.3612, 0.2424, 0.2039, 0.1925
+oddball_proportions: 0.2112, 0.2424, 0.2039, 0.3425
+
+[original]
+  color_1: RGB(46, 109, 83) prop=0.3612
+  color_2: RGB(53, 159, 123) prop=0.2424
+  color_3: RGB(18, 22, 20) prop=0.2039
+  color_4: RGB(147, 157, 147) prop=0.1925
+
+[lum_eq]
+  color_1: RGB(49, 112, 86) prop=0.3612
+  color_2: RGB(0, 116, 83) prop=0.2424
+  color_3: RGB(98, 102, 100) prop=0.2039
+  color_4: RGB(94, 103, 94) prop=0.1925
+
+[chroma_boost_lum_eq]
+  color_1: RGB(0, 117, 79) prop=0.3612
+  color_2: RGB(0, 121, 74) prop=0.2424
+  color_3: RGB(96, 102, 99) prop=0.2039
+  color_4: RGB(91, 105, 91) prop=0.1925

@@ -1,0 +1,21 @@
+trial_id: 12
+source: ember/0916
+n_colors: 3
+difficulty_shift: 0.30
+distractor_proportions: 0.4950, 0.2658, 0.2392
+oddball_proportions: 0.3450, 0.2658, 0.3892
+
+[original]
+  color_1: RGB(170, 137, 140) prop=0.4950
+  color_2: RGB(38, 31, 35) prop=0.2658
+  color_3: RGB(89, 83, 90) prop=0.2392
+
+[lum_eq]
+  color_1: RGB(108, 78, 81) prop=0.4950
+  color_2: RGB(91, 83, 88) prop=0.2658
+  color_3: RGB(90, 84, 91) prop=0.2392
+
+[chroma_boost_lum_eq]
+  color_1: RGB(117, 73, 79) prop=0.4950
+  color_2: RGB(94, 82, 89) prop=0.2658
+  color_3: RGB(92, 83, 93) prop=0.2392
