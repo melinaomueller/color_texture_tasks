@@ -1,0 +1,8 @@
+Source: cobalt/0659
+Trial 31: n_colors=4, difficulty=0.20
+
+  Color 1: RGB( 46,  45,  70)  prop=0.2929
+  Color 2: RGB(164, 158, 159)  prop=0.2254
+  Color 3: RGB( 74,  74, 101)  prop=0.1971
+  Color 4: RGB(190, 189, 187)  prop=0.1552
+  Color 5: RGB(108, 109, 135)  prop=0.1293

@@ -1,0 +1,21 @@
+trial_id: 74
+source: play_dough/2279
+n_colors: 3
+difficulty_shift: 0.30
+distractor_proportions: 0.4781, 0.3329, 0.1890
+oddball_proportions: 0.3281, 0.3329, 0.3390
+
+[original]
+  color_1: RGB(152, 187, 164) prop=0.4781
+  color_2: RGB(250, 177, 109) prop=0.3329
+  color_3: RGB(235, 106, 125) prop=0.1890
+
+[lum_eq]
+  color_1: RGB(146, 181, 158) prop=0.4781
+  color_2: RGB(228, 158, 91) prop=0.3329
+  color_3: RGB(255, 132, 149) prop=0.1890
+
+[chroma_boost_lum_eq]
+  color_1: RGB(131, 185, 151) prop=0.4781
+  color_2: RGB(247, 149, 40) prop=0.3329
+  color_3: RGB(255, 97, 138) prop=0.1890

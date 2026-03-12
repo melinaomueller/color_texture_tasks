@@ -1,0 +1,21 @@
+trial_id: 35
+source: garnet/1231
+n_colors: 3
+difficulty_shift: 0.20
+distractor_proportions: 0.3548, 0.3370, 0.3082
+oddball_proportions: 0.2548, 0.3370, 0.4082
+
+[original]
+  color_1: RGB(44, 23, 20) prop=0.3548
+  color_2: RGB(96, 60, 53) prop=0.3370
+  color_3: RGB(130, 90, 82) prop=0.3082
+
+[lum_eq]
+  color_1: RGB(83, 59, 55) prop=0.3548
+  color_2: RGB(91, 56, 49) prop=0.3370
+  color_3: RGB(92, 55, 48) prop=0.3082
+
+[chroma_boost_lum_eq]
+  color_1: RGB(91, 55, 50) prop=0.3548
+  color_2: RGB(102, 50, 41) prop=0.3370
+  color_3: RGB(103, 49, 40) prop=0.3082

@@ -1,0 +1,24 @@
+trial_id: 8
+source: porcelain/2326
+n_colors: 4
+difficulty_shift: 0.30
+distractor_proportions: 0.3277, 0.2604, 0.2404, 0.1715
+oddball_proportions: 0.1777, 0.4104, 0.2404, 0.1715
+
+[original]
+  color_1: RGB(255, 255, 255) prop=0.3277
+  color_2: RGB(210, 161, 86) prop=0.2604
+  color_3: RGB(219, 213, 211) prop=0.2404
+  color_4: RGB(206, 195, 187) prop=0.1715
+
+[lum_eq]
+  color_1: RGB(208, 208, 208) prop=0.3277
+  color_2: RGB(252, 200, 123) prop=0.2604
+  color_3: RGB(213, 207, 205) prop=0.2404
+  color_4: RGB(218, 207, 198) prop=0.1715
+
+[chroma_boost_lum_eq]
+  color_1: RGB(208, 208, 208) prop=0.3277
+  color_2: RGB(255, 196, 74) prop=0.2604
+  color_3: RGB(216, 207, 204) prop=0.2404
+  color_4: RGB(222, 206, 193) prop=0.1715

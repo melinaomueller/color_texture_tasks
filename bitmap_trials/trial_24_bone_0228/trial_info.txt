@@ -1,0 +1,21 @@
+trial_id: 24
+source: bone/0228
+n_colors: 3
+difficulty_shift: 0.25
+distractor_proportions: 0.4806, 0.3220, 0.1974
+oddball_proportions: 0.3556, 0.4470, 0.1974
+
+[original]
+  color_1: RGB(97, 92, 49) prop=0.4806
+  color_2: RGB(150, 172, 161) prop=0.3220
+  color_3: RGB(201, 203, 195) prop=0.1974
+
+[lum_eq]
+  color_1: RGB(160, 153, 107) prop=0.4806
+  color_2: RGB(135, 157, 146) prop=0.3220
+  color_3: RGB(151, 153, 145) prop=0.1974
+
+[chroma_boost_lum_eq]
+  color_1: RGB(162, 154, 83) prop=0.4806
+  color_2: RGB(126, 159, 143) prop=0.3220
+  color_3: RGB(150, 153, 142) prop=0.1974

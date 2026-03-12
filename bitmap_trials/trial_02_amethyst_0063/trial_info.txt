@@ -1,0 +1,27 @@
+trial_id: 2
+source: amethyst/0063
+n_colors: 5
+difficulty_shift: 0.30
+distractor_proportions: 0.3056, 0.2741, 0.1881, 0.1625, 0.0696
+oddball_proportions: 0.1556, 0.4241, 0.1881, 0.1625, 0.0696
+
+[original]
+  color_1: RGB(120, 66, 137) prop=0.3056
+  color_2: RGB(150, 101, 166) prop=0.2741
+  color_3: RGB(89, 31, 104) prop=0.1881
+  color_4: RGB(190, 147, 200) prop=0.1625
+  color_5: RGB(41, 3, 50) prop=0.0696
+
+[lum_eq]
+  color_1: RGB(119, 65, 136) prop=0.3056
+  color_2: RGB(115, 69, 131) prop=0.2741
+  color_3: RGB(123, 63, 137) prop=0.1881
+  color_4: RGB(111, 73, 121) prop=0.1625
+  color_5: RGB(114, 71, 122) prop=0.0696
+
+[chroma_boost_lum_eq]
+  color_1: RGB(132, 47, 161) prop=0.3056
+  color_2: RGB(127, 55, 154) prop=0.2741
+  color_3: RGB(137, 40, 163) prop=0.1881
+  color_4: RGB(122, 63, 139) prop=0.1625
+  color_5: RGB(125, 60, 139) prop=0.0696

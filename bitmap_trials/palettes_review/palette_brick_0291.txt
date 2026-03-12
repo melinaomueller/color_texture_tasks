@@ -1,0 +1,8 @@
+Source: brick/0291
+Trial 1: n_colors=5, difficulty=0.30
+
+  Color 1: RGB(176, 115, 127)  prop=0.7533
+  Color 2: RGB( 89,  85,  82)  prop=0.0711
+  Color 3: RGB(121, 114, 112)  prop=0.0639
+  Color 4: RGB( 64,  50,  47)  prop=0.0573
+  Color 5: RGB(167, 140, 146)  prop=0.0543

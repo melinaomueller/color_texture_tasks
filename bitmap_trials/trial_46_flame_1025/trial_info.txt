@@ -1,0 +1,21 @@
+trial_id: 46
+source: flame/1025
+n_colors: 3
+difficulty_shift: 0.15
+distractor_proportions: 0.3822, 0.3694, 0.2484
+oddball_proportions: 0.3072, 0.4444, 0.2484
+
+[original]
+  color_1: RGB(184, 65, 27) prop=0.3822
+  color_2: RGB(238, 173, 78) prop=0.3694
+  color_3: RGB(233, 234, 218) prop=0.2484
+
+[lum_eq]
+  color_1: RGB(255, 135, 90) prop=0.3822
+  color_2: RGB(224, 161, 66) prop=0.3694
+  color_3: RGB(173, 174, 159) prop=0.2484
+
+[chroma_boost_lum_eq]
+  color_1: RGB(255, 106, 44) prop=0.3822
+  color_2: RGB(239, 155, 0) prop=0.3694
+  color_3: RGB(173, 175, 152) prop=0.2484

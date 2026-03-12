@@ -1,0 +1,21 @@
+trial_id: 45
+source: sequin/2693
+n_colors: 3
+difficulty_shift: 0.15
+distractor_proportions: 0.4950, 0.2949, 0.2101
+oddball_proportions: 0.4200, 0.3699, 0.2101
+
+[original]
+  color_1: RGB(90, 51, 133) prop=0.4950
+  color_2: RGB(150, 158, 241) prop=0.2949
+  color_3: RGB(181, 129, 95) prop=0.2101
+
+[lum_eq]
+  color_1: RGB(148, 104, 192) prop=0.4950
+  color_2: RGB(107, 118, 197) prop=0.2949
+  color_3: RGB(163, 113, 79) prop=0.2101
+
+[chroma_boost_lum_eq]
+  color_1: RGB(156, 91, 227) prop=0.4950
+  color_2: RGB(82, 115, 234) prop=0.2949
+  color_3: RGB(178, 106, 56) prop=0.2101

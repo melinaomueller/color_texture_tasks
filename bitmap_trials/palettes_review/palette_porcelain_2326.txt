@@ -1,0 +1,8 @@
+Source: porcelain/2326
+Trial 8: n_colors=4, difficulty=0.30
+
+  Color 1: RGB(255, 255, 255)  prop=0.3277
+  Color 2: RGB(219, 213, 211)  prop=0.2404
+  Color 3: RGB(206, 195, 187)  prop=0.1715
+  Color 4: RGB(216, 172,  97)  prop=0.1407
+  Color 5: RGB(203, 148,  74)  prop=0.1197

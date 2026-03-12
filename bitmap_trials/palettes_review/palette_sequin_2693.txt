@@ -1,0 +1,8 @@
+Source: sequin/2693
+Trial 45: n_colors=3, difficulty=0.15
+
+  Color 1: RGB( 83,  33,  99)  prop=0.2876
+  Color 2: RGB(181, 129,  95)  prop=0.2101
+  Color 3: RGB( 99,  75, 179)  prop=0.2074
+  Color 4: RGB(111, 138, 243)  prop=0.1732
+  Color 5: RGB(205, 187, 239)  prop=0.1217

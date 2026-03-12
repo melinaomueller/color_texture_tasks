@@ -1,0 +1,8 @@
+Source: egg_shell/0904
+Trial 56: n_colors=4, difficulty=0.10
+
+  Color 1: RGB(208, 210, 204)  prop=0.3981
+  Color 2: RGB(212, 165, 106)  prop=0.1924
+  Color 3: RGB(145, 171, 169)  prop=0.1706
+  Color 4: RGB( 52,  23,  18)  prop=0.1206
+  Color 5: RGB(171,  92,  39)  prop=0.1184

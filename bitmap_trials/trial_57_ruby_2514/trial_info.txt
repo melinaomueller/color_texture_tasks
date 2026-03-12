@@ -1,0 +1,21 @@
+trial_id: 57
+source: ruby/2514
+n_colors: 3
+difficulty_shift: 0.10
+distractor_proportions: 0.5068, 0.3362, 0.1570
+oddball_proportions: 0.4568, 0.3362, 0.2070
+
+[original]
+  color_1: RGB(3, 2, 4) prop=0.5068
+  color_2: RGB(191, 180, 170) prop=0.3362
+  color_3: RGB(118, 17, 39) prop=0.1570
+
+[lum_eq]
+  color_1: RGB(78, 78, 79) prop=0.5068
+  color_2: RGB(86, 77, 68) prop=0.3362
+  color_3: RGB(141, 42, 57) prop=0.1570
+
+[chroma_boost_lum_eq]
+  color_1: RGB(79, 78, 80) prop=0.5068
+  color_2: RGB(89, 76, 63) prop=0.3362
+  color_3: RGB(167, 0, 47) prop=0.1570

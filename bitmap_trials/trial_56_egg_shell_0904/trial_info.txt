@@ -1,0 +1,24 @@
+trial_id: 56
+source: egg_shell/0904
+n_colors: 4
+difficulty_shift: 0.10
+distractor_proportions: 0.3981, 0.3107, 0.1706, 0.1206
+oddball_proportions: 0.3481, 0.3107, 0.1706, 0.1706
+
+[original]
+  color_1: RGB(208, 210, 204) prop=0.3981
+  color_2: RGB(196, 137, 80) prop=0.3107
+  color_3: RGB(145, 171, 169) prop=0.1706
+  color_4: RGB(52, 23, 18) prop=0.1206
+
+[lum_eq]
+  color_1: RGB(134, 136, 130) prop=0.3981
+  color_2: RGB(180, 123, 67) prop=0.3107
+  color_3: RGB(115, 140, 138) prop=0.1706
+  color_4: RGB(165, 126, 119) prop=0.1206
+
+[chroma_boost_lum_eq]
+  color_1: RGB(134, 136, 128) prop=0.3981
+  color_2: RGB(195, 116, 22) prop=0.3107
+  color_3: RGB(103, 143, 140) prop=0.1706
+  color_4: RGB(178, 121, 111) prop=0.1206

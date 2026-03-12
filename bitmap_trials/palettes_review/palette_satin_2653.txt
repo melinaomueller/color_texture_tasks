@@ -1,0 +1,8 @@
+Source: satin/2653
+Trial 25: n_colors=5, difficulty=0.20
+
+  Color 1: RGB( 37,   1,   5)  prop=0.4501
+  Color 2: RGB( 83,   1,  21)  prop=0.1909
+  Color 3: RGB(139,   5,  42)  prop=0.1628
+  Color 4: RGB(184,  32,  78)  prop=0.1049
+  Color 5: RGB(212,  71, 115)  prop=0.0913

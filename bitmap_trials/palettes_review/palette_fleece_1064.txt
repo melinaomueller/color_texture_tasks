@@ -1,0 +1,8 @@
+Source: fleece/1064
+Trial 3: n_colors=5, difficulty=0.30
+
+  Color 1: RGB(190,  46,  25)  prop=0.3844
+  Color 2: RGB( 35,  32,  48)  prop=0.2391
+  Color 3: RGB(  5, 119, 154)  prop=0.2041
+  Color 4: RGB(224, 169,  24)  prop=0.0908
+  Color 5: RGB(249, 233,  67)  prop=0.0816

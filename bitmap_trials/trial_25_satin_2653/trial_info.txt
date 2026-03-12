@@ -1,0 +1,27 @@
+trial_id: 25
+source: satin/2653
+n_colors: 5
+difficulty_shift: 0.20
+distractor_proportions: 0.4501, 0.1909, 0.1628, 0.1049, 0.0913
+oddball_proportions: 0.3501, 0.1909, 0.1628, 0.1049, 0.1913
+
+[original]
+  color_1: RGB(37, 1, 5) prop=0.4501
+  color_2: RGB(83, 1, 21) prop=0.1909
+  color_3: RGB(139, 5, 42) prop=0.1628
+  color_4: RGB(184, 32, 78) prop=0.1049
+  color_5: RGB(212, 71, 115) prop=0.0913
+
+[lum_eq]
+  color_1: RGB(92, 56, 61) prop=0.4501
+  color_2: RGB(118, 38, 48) prop=0.1909
+  color_3: RGB(137, 1, 40) prop=0.1628
+  color_4: RGB(145, 0, 49) prop=0.1049
+  color_5: RGB(142, 0, 59) prop=0.0913
+
+[chroma_boost_lum_eq]
+  color_1: RGB(103, 50, 58) prop=0.4501
+  color_2: RGB(139, 0, 39) prop=0.1909
+  color_3: RGB(165, 0, 29) prop=0.1628
+  color_4: RGB(178, 0, 43) prop=0.1049
+  color_5: RGB(174, 0, 57) prop=0.0913

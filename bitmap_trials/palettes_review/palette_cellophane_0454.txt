@@ -1,0 +1,8 @@
+Source: cellophane/0454
+Trial 6: n_colors=4, difficulty=0.30
+
+  Color 1: RGB(179, 135, 160)  prop=0.3573
+  Color 2: RGB(113,  96, 140)  prop=0.2901
+  Color 3: RGB(214, 197, 208)  prop=0.1440
+  Color 4: RGB( 56,  41,  74)  prop=0.1290
+  Color 5: RGB(147, 138,  68)  prop=0.0796

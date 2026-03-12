@@ -1,0 +1,8 @@
+Source: frankincense/1176
+Trial 36: n_colors=3, difficulty=0.20
+
+  Color 1: RGB(193, 171, 143)  prop=0.2340
+  Color 2: RGB(163, 129,  92)  prop=0.2338
+  Color 3: RGB(118,  84,  50)  prop=0.1974
+  Color 4: RGB(222, 214, 201)  prop=0.1910
+  Color 5: RGB( 66,  37,  15)  prop=0.1438

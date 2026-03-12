@@ -1,0 +1,21 @@
+trial_id: 66
+source: paint/2036
+n_colors: 3
+difficulty_shift: 0.30
+distractor_proportions: 0.3851, 0.3086, 0.3063
+oddball_proportions: 0.2351, 0.3086, 0.4563
+
+[original]
+  color_1: RGB(12, 126, 143) prop=0.3851
+  color_2: RGB(122, 170, 158) prop=0.3086
+  color_3: RGB(72, 156, 166) prop=0.3063
+
+[lum_eq]
+  color_1: RGB(55, 152, 169) prop=0.3851
+  color_2: RGB(101, 149, 137) prop=0.3086
+  color_3: RGB(67, 151, 161) prop=0.3063
+
+[chroma_boost_lum_eq]
+  color_1: RGB(0, 157, 184) prop=0.3851
+  color_2: RGB(76, 153, 136) prop=0.3086
+  color_3: RGB(0, 156, 172) prop=0.3063

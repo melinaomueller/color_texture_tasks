@@ -1,0 +1,24 @@
+trial_id: 20
+source: oilpaper/1955
+n_colors: 4
+difficulty_shift: 0.25
+distractor_proportions: 0.2791, 0.2719, 0.2346, 0.2143
+oddball_proportions: 0.1541, 0.2719, 0.2346, 0.3393
+
+[original]
+  color_1: RGB(189, 135, 87) prop=0.2791
+  color_2: RGB(139, 86, 48) prop=0.2719
+  color_3: RGB(213, 204, 186) prop=0.2346
+  color_4: RGB(204, 173, 136) prop=0.2143
+
+[lum_eq]
+  color_1: RGB(200, 145, 96) prop=0.2791
+  color_2: RGB(203, 143, 102) prop=0.2719
+  color_3: RGB(164, 155, 138) prop=0.2346
+  color_4: RGB(181, 151, 115) prop=0.2143
+
+[chroma_boost_lum_eq]
+  color_1: RGB(215, 139, 64) prop=0.2791
+  color_2: RGB(221, 135, 73) prop=0.2719
+  color_3: RGB(167, 155, 129) prop=0.2346
+  color_4: RGB(190, 149, 94) prop=0.2143

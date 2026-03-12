@@ -1,0 +1,21 @@
+trial_id: 47
+source: moonstone/1802
+n_colors: 3
+difficulty_shift: 0.15
+distractor_proportions: 0.5172, 0.3781, 0.1047
+oddball_proportions: 0.4422, 0.3781, 0.1797
+
+[original]
+  color_1: RGB(135, 126, 130) prop=0.5172
+  color_2: RGB(81, 87, 115) prop=0.3781
+  color_3: RGB(175, 167, 165) prop=0.1047
+
+[lum_eq]
+  color_1: RGB(134, 125, 129) prop=0.5172
+  color_2: RGB(121, 126, 156) prop=0.3781
+  color_3: RGB(134, 126, 124) prop=0.1047
+
+[chroma_boost_lum_eq]
+  color_1: RGB(138, 124, 130) prop=0.5172
+  color_2: RGB(115, 126, 171) prop=0.3781
+  color_3: RGB(137, 125, 122) prop=0.1047

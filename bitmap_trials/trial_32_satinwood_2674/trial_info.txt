@@ -1,0 +1,24 @@
+trial_id: 32
+source: satinwood/2674
+n_colors: 4
+difficulty_shift: 0.20
+distractor_proportions: 0.3567, 0.2207, 0.2168, 0.2058
+oddball_proportions: 0.2567, 0.2207, 0.2168, 0.3058
+
+[original]
+  color_1: RGB(203, 170, 109) prop=0.3567
+  color_2: RGB(151, 95, 36) prop=0.2207
+  color_3: RGB(113, 51, 15) prop=0.2168
+  color_4: RGB(46, 5, 3) prop=0.2058
+
+[lum_eq]
+  color_1: RGB(111, 86, 29) prop=0.3567
+  color_2: RGB(130, 77, 17) prop=0.2207
+  color_3: RGB(138, 72, 35) prop=0.2168
+  color_4: RGB(125, 77, 77) prop=0.2058
+
+[chroma_boost_lum_eq]
+  color_1: RGB(117, 84, 0) prop=0.3567
+  color_2: RGB(143, 70, 0) prop=0.2207
+  color_3: RGB(155, 59, 0) prop=0.2168
+  color_4: RGB(139, 68, 70) prop=0.2058

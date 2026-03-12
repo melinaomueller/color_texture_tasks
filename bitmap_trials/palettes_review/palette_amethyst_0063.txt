@@ -1,0 +1,8 @@
+Source: amethyst/0063
+Trial 2: n_colors=5, difficulty=0.30
+
+  Color 1: RGB(120,  66, 137)  prop=0.3056
+  Color 2: RGB(150, 101, 166)  prop=0.2741
+  Color 3: RGB( 89,  31, 104)  prop=0.1881
+  Color 4: RGB(190, 147, 200)  prop=0.1625
+  Color 5: RGB( 41,   3,  50)  prop=0.0696

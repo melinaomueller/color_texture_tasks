@@ -1,0 +1,24 @@
+trial_id: 42
+source: rhinestone/2450
+n_colors: 4
+difficulty_shift: 0.15
+distractor_proportions: 0.3124, 0.2656, 0.2467, 0.1753
+oddball_proportions: 0.2374, 0.2656, 0.2467, 0.2503
+
+[original]
+  color_1: RGB(143, 172, 52) prop=0.3124
+  color_2: RGB(84, 113, 29) prop=0.2656
+  color_3: RGB(21, 28, 30) prop=0.2467
+  color_4: RGB(135, 142, 132) prop=0.1753
+
+[lum_eq]
+  color_1: RGB(84, 115, 0) prop=0.3124
+  color_2: RGB(85, 114, 30) prop=0.2656
+  color_3: RGB(98, 107, 109) prop=0.2467
+  color_4: RGB(101, 107, 98) prop=0.1753
+
+[chroma_boost_lum_eq]
+  color_1: RGB(62, 120, 0) prop=0.3124
+  color_2: RGB(67, 118, 0) prop=0.2656
+  color_3: RGB(95, 107, 111) prop=0.2467
+  color_4: RGB(98, 108, 94) prop=0.1753

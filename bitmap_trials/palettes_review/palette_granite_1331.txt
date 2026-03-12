@@ -1,0 +1,8 @@
+Source: granite/1331
+Trial 11: n_colors=3, difficulty=0.30
+
+  Color 1: RGB(145, 120,  82)  prop=0.2837
+  Color 2: RGB( 21,  11,   6)  prop=0.2022
+  Color 3: RGB(108,  87,  59)  prop=0.1869
+  Color 4: RGB(177, 151, 112)  prop=0.1759
+  Color 5: RGB( 66,  49,  32)  prop=0.1513

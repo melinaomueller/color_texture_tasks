@@ -1,0 +1,24 @@
+trial_id: 30
+source: plaster/2215
+n_colors: 4
+difficulty_shift: 0.20
+distractor_proportions: 0.3053, 0.2600, 0.2441, 0.1906
+oddball_proportions: 0.2053, 0.3600, 0.2441, 0.1906
+
+[original]
+  color_1: RGB(245, 111, 121) prop=0.3053
+  color_2: RGB(194, 30, 46) prop=0.2600
+  color_3: RGB(218, 59, 73) prop=0.2441
+  color_4: RGB(162, 7, 21) prop=0.1906
+
+[lum_eq]
+  color_1: RGB(196, 67, 82) prop=0.3053
+  color_2: RGB(211, 49, 58) prop=0.2600
+  color_3: RGB(209, 50, 67) prop=0.2441
+  color_4: RGB(205, 59, 51) prop=0.1906
+
+[chroma_boost_lum_eq]
+  color_1: RGB(229, 0, 67) prop=0.3053
+  color_2: RGB(249, 0, 31) prop=0.2600
+  color_3: RGB(248, 0, 46) prop=0.2441
+  color_4: RGB(240, 0, 17) prop=0.1906

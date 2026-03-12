@@ -1,0 +1,8 @@
+Source: silk/2764
+Trial 7: n_colors=4, difficulty=0.30
+
+  Color 1: RGB(222, 169, 182)  prop=0.2957
+  Color 2: RGB(208, 149, 157)  prop=0.1904
+  Color 3: RGB(175, 103, 105)  prop=0.1858
+  Color 4: RGB(162,  83,  83)  prop=0.1787
+  Color 5: RGB(193, 127, 132)  prop=0.1495

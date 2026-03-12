@@ -1,0 +1,27 @@
+trial_id: 28
+source: leather/1634
+n_colors: 5
+difficulty_shift: 0.20
+distractor_proportions: 0.2970, 0.2399, 0.2124, 0.2010, 0.0497
+oddball_proportions: 0.1970, 0.2399, 0.2124, 0.3010, 0.0497
+
+[original]
+  color_1: RGB(172, 127, 75) prop=0.2970
+  color_2: RGB(122, 100, 78) prop=0.2399
+  color_3: RGB(81, 66, 56) prop=0.2124
+  color_4: RGB(34, 30, 28) prop=0.2010
+  color_5: RGB(218, 188, 108) prop=0.0497
+
+[lum_eq]
+  color_1: RGB(136, 95, 45) prop=0.2970
+  color_2: RGB(121, 99, 77) prop=0.2399
+  color_3: RGB(117, 100, 90) prop=0.2124
+  color_4: RGB(107, 102, 100) prop=0.2010
+  color_5: RGB(123, 101, 23) prop=0.0497
+
+[chroma_boost_lum_eq]
+  color_1: RGB(147, 91, 0) prop=0.2970
+  color_2: RGB(129, 98, 64) prop=0.2399
+  color_3: RGB(122, 99, 83) prop=0.2124
+  color_4: RGB(109, 102, 98) prop=0.2010
+  color_5: RGB(127, 101, 0) prop=0.0497

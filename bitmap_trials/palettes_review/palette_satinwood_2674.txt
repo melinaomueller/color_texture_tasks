@@ -1,0 +1,8 @@
+Source: satinwood/2674
+Trial 32: n_colors=4, difficulty=0.20
+
+  Color 1: RGB(190, 153,  87)  prop=0.2213
+  Color 2: RGB(151,  95,  36)  prop=0.2207
+  Color 3: RGB(113,  51,  15)  prop=0.2168
+  Color 4: RGB( 46,   5,   3)  prop=0.2058
+  Color 5: RGB(224, 199, 144)  prop=0.1354

@@ -1,0 +1,8 @@
+Source: rhinestone/2450
+Trial 42: n_colors=4, difficulty=0.15
+
+  Color 1: RGB(143, 172,  52)  prop=0.3124
+  Color 2: RGB( 84, 113,  29)  prop=0.2656
+  Color 3: RGB( 21,  28,  30)  prop=0.2467
+  Color 4: RGB(102, 112, 108)  prop=0.1128
+  Color 5: RGB(194, 197, 176)  prop=0.0625

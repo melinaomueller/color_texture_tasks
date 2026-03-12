@@ -1,0 +1,8 @@
+Source: lava/1601
+Trial 16: n_colors=5, difficulty=0.25
+
+  Color 1: RGB( 85,  76,  77)  prop=0.4857
+  Color 2: RGB( 50,  40,  41)  prop=0.2437
+  Color 3: RGB(246, 120,  78)  prop=0.1500
+  Color 4: RGB(250, 215,  87)  prop=0.0719
+  Color 5: RGB(207,  55,  26)  prop=0.0487

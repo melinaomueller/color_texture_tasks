@@ -1,0 +1,8 @@
+Source: shell/2711
+Trial 34: n_colors=3, difficulty=0.20
+
+  Color 1: RGB(204, 172, 139)  prop=0.2567
+  Color 2: RGB(213, 198, 183)  prop=0.2471
+  Color 3: RGB(188, 142,  99)  prop=0.2308
+  Color 4: RGB(163, 107,  66)  prop=0.1767
+  Color 5: RGB(123,  65,  26)  prop=0.0887

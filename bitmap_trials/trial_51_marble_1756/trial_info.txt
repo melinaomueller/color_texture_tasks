@@ -1,0 +1,27 @@
+trial_id: 51
+source: marble/1756
+n_colors: 5
+difficulty_shift: 0.10
+distractor_proportions: 0.3059, 0.2505, 0.1937, 0.1399, 0.1100
+oddball_proportions: 0.2559, 0.2505, 0.2437, 0.1399, 0.1100
+
+[original]
+  color_1: RGB(88, 143, 104) prop=0.3059
+  color_2: RGB(71, 125, 79) prop=0.2505
+  color_3: RGB(100, 161, 134) prop=0.1937
+  color_4: RGB(97, 190, 181) prop=0.1399
+  color_5: RGB(60, 169, 159) prop=0.1100
+
+[lum_eq]
+  color_1: RGB(101, 156, 116) prop=0.3059
+  color_2: RGB(101, 156, 108) prop=0.2505
+  color_3: RGB(95, 156, 129) prop=0.1937
+  color_4: RGB(63, 158, 150) prop=0.1399
+  color_5: RGB(48, 160, 150) prop=0.1100
+
+[chroma_boost_lum_eq]
+  color_1: RGB(71, 161, 102) prop=0.3059
+  color_2: RGB(72, 162, 90) prop=0.2505
+  color_3: RGB(59, 161, 122) prop=0.1937
+  color_4: RGB(0, 164, 153) prop=0.1399
+  color_5: RGB(0, 166, 153) prop=0.1100

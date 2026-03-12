@@ -1,0 +1,8 @@
+Source: ice/1462
+Trial 53: n_colors=4, difficulty=0.10
+
+  Color 1: RGB(144, 166, 224)  prop=0.3539
+  Color 2: RGB(109, 138, 207)  prop=0.2370
+  Color 3: RGB(190, 204, 244)  prop=0.1822
+  Color 4: RGB( 63,  99, 170)  prop=0.1240
+  Color 5: RGB( 34,  62, 120)  prop=0.1030

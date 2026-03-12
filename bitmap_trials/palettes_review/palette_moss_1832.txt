@@ -1,0 +1,8 @@
+Source: moss/1832
+Trial 14: n_colors=5, difficulty=0.25
+
+  Color 1: RGB( 43,  65,   9)  prop=0.2447
+  Color 2: RGB( 69,  97,  15)  prop=0.2365
+  Color 3: RGB( 98, 130,  24)  prop=0.2055
+  Color 4: RGB( 17,  32,   5)  prop=0.2032
+  Color 5: RGB(131, 166,  41)  prop=0.1101

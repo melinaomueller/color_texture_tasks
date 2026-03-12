@@ -1,0 +1,8 @@
+Source: bone/0228
+Trial 24: n_colors=3, difficulty=0.25
+
+  Color 1: RGB(150, 172, 161)  prop=0.3220
+  Color 2: RGB(201, 203, 195)  prop=0.1974
+  Color 3: RGB( 49,  44,  29)  prop=0.1942
+  Color 4: RGB(125, 110,  83)  prop=0.1912
+  Color 5: RGB(139, 156,  21)  prop=0.0953

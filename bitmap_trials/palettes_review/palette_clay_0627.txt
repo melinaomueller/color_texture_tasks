@@ -1,0 +1,8 @@
+Source: clay/0627
+Trial 49: n_colors=5, difficulty=0.10
+
+  Color 1: RGB(164,  81,  49)  prop=0.4057
+  Color 2: RGB(183, 100,  69)  prop=0.3528
+  Color 3: RGB(131,  55,  30)  prop=0.1440
+  Color 4: RGB(202, 140, 121)  prop=0.0721
+  Color 5: RGB( 39,  15,   7)  prop=0.0255

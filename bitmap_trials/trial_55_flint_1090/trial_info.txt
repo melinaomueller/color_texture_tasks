@@ -1,0 +1,24 @@
+trial_id: 55
+source: flint/1090
+n_colors: 4
+difficulty_shift: 0.10
+distractor_proportions: 0.2599, 0.2501, 0.2486, 0.2414
+oddball_proportions: 0.2099, 0.2501, 0.2486, 0.2914
+
+[original]
+  color_1: RGB(84, 60, 54) prop=0.2599
+  color_2: RGB(185, 142, 133) prop=0.2501
+  color_3: RGB(162, 99, 89) prop=0.2486
+  color_4: RGB(197, 188, 191) prop=0.2414
+
+[lum_eq]
+  color_1: RGB(151, 123, 116) prop=0.2599
+  color_2: RGB(161, 120, 111) prop=0.2501
+  color_3: RGB(177, 113, 102) prop=0.2486
+  color_4: RGB(136, 127, 130) prop=0.2414
+
+[chroma_boost_lum_eq]
+  color_1: RGB(161, 120, 110) prop=0.2599
+  color_2: RGB(175, 114, 102) prop=0.2501
+  color_3: RGB(197, 102, 89) prop=0.2486
+  color_4: RGB(139, 126, 130) prop=0.2414

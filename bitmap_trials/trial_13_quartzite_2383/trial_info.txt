@@ -1,0 +1,27 @@
+trial_id: 13
+source: quartzite/2383
+n_colors: 5
+difficulty_shift: 0.25
+distractor_proportions: 0.3538, 0.2484, 0.1780, 0.1310, 0.0888
+oddball_proportions: 0.2288, 0.2484, 0.3030, 0.1310, 0.0888
+
+[original]
+  color_1: RGB(184, 186, 184) prop=0.3538
+  color_2: RGB(184, 159, 108) prop=0.2484
+  color_3: RGB(151, 123, 74) prop=0.1780
+  color_4: RGB(224, 202, 150) prop=0.1310
+  color_5: RGB(36, 26, 17) prop=0.0888
+
+[lum_eq]
+  color_1: RGB(137, 138, 137) prop=0.3538
+  color_2: RGB(159, 135, 85) prop=0.2484
+  color_3: RGB(163, 134, 84) prop=0.1780
+  color_4: RGB(155, 136, 87) prop=0.1310
+  color_5: RGB(150, 136, 125) prop=0.0888
+
+[chroma_boost_lum_eq]
+  color_1: RGB(136, 139, 136) prop=0.3538
+  color_2: RGB(165, 134, 57) prop=0.2484
+  color_3: RGB(171, 132, 55) prop=0.1780
+  color_4: RGB(161, 136, 60) prop=0.1310
+  color_5: RGB(155, 134, 118) prop=0.0888

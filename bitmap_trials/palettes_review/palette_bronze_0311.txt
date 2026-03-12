@@ -1,0 +1,8 @@
+Source: bronze/0311
+Trial 43: n_colors=4, difficulty=0.15
+
+  Color 1: RGB(185, 139,  35)  prop=0.3493
+  Color 2: RGB(203, 159,  49)  prop=0.2616
+  Color 3: RGB(164, 118,  25)  prop=0.2443
+  Color 4: RGB(133,  90,  15)  prop=0.0911
+  Color 5: RGB(230, 190,  83)  prop=0.0537

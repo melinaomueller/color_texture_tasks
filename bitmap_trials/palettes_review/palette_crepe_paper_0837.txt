@@ -1,0 +1,8 @@
+Source: crepe_paper/0837
+Trial 40: n_colors=5, difficulty=0.15
+
+  Color 1: RGB(209,  88,   4)  prop=0.2980
+  Color 2: RGB(222, 106,  11)  prop=0.2888
+  Color 3: RGB(234, 122,  27)  prop=0.1835
+  Color 4: RGB(194,  70,   1)  prop=0.1600
+  Color 5: RGB(244, 141,  56)  prop=0.0696

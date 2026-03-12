@@ -1,0 +1,8 @@
+Source: suede/2973
+Trial 52: n_colors=5, difficulty=0.10
+
+  Color 1: RGB(160,  24,  33)  prop=0.3156
+  Color 2: RGB(  8,  87, 143)  prop=0.2052
+  Color 3: RGB( 39,  26,  32)  prop=0.1972
+  Color 4: RGB(202,  80,  66)  prop=0.1634
+  Color 5: RGB(135, 133,  70)  prop=0.1186

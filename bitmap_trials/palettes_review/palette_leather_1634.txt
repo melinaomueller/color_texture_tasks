@@ -1,0 +1,8 @@
+Source: leather/1634
+Trial 28: n_colors=5, difficulty=0.20
+
+  Color 1: RGB(172, 127,  75)  prop=0.2970
+  Color 2: RGB(122, 100,  78)  prop=0.2399
+  Color 3: RGB( 81,  66,  56)  prop=0.2124
+  Color 4: RGB( 34,  30,  28)  prop=0.2010
+  Color 5: RGB(218, 188, 108)  prop=0.0497

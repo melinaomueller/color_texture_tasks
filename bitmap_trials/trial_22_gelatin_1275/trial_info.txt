@@ -1,0 +1,21 @@
+trial_id: 22
+source: gelatin/1275
+n_colors: 3
+difficulty_shift: 0.25
+distractor_proportions: 0.4810, 0.2968, 0.2223
+oddball_proportions: 0.3560, 0.4218, 0.2223
+
+[original]
+  color_1: RGB(194, 159, 60) prop=0.4810
+  color_2: RGB(42, 6, 5) prop=0.2968
+  color_3: RGB(111, 40, 23) prop=0.2223
+
+[lum_eq]
+  color_1: RGB(99, 75, 0) prop=0.4810
+  color_2: RGB(107, 67, 68) prop=0.2968
+  color_3: RGB(129, 55, 37) prop=0.2223
+
+[chroma_boost_lum_eq]
+  color_1: RGB(104, 74, 0) prop=0.4810
+  color_2: RGB(120, 60, 63) prop=0.2968
+  color_3: RGB(148, 35, 14) prop=0.2223

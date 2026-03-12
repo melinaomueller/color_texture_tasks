@@ -1,0 +1,8 @@
+Source: ember/0921
+Trial 12: n_colors=3, difficulty=0.30
+
+  Color 1: RGB( 29,  12,  12)  prop=0.3573
+  Color 2: RGB( 57,  44,  43)  prop=0.2371
+  Color 3: RGB( 82,  19,  15)  prop=0.1952
+  Color 4: RGB( 91,  78,  78)  prop=0.1441
+  Color 5: RGB(160,  43,  25)  prop=0.0663

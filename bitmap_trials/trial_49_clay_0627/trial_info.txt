@@ -1,0 +1,27 @@
+trial_id: 49
+source: clay/0627
+n_colors: 5
+difficulty_shift: 0.10
+distractor_proportions: 0.4057, 0.3528, 0.1440, 0.0721, 0.0255
+oddball_proportions: 0.3557, 0.3528, 0.1440, 0.1221, 0.0255
+
+[original]
+  color_1: RGB(164, 81, 49) prop=0.4057
+  color_2: RGB(183, 100, 69) prop=0.3528
+  color_3: RGB(131, 55, 30) prop=0.1440
+  color_4: RGB(202, 140, 121) prop=0.0721
+  color_5: RGB(39, 15, 7) prop=0.0255
+
+[lum_eq]
+  color_1: RGB(152, 71, 39) prop=0.4057
+  color_2: RGB(150, 72, 43) prop=0.3528
+  color_3: RGB(150, 71, 45) prop=0.1440
+  color_4: RGB(135, 80, 63) prop=0.0721
+  color_5: RGB(117, 87, 82) prop=0.0255
+
+[chroma_boost_lum_eq]
+  color_1: RGB(172, 51, 2) prop=0.4057
+  color_2: RGB(170, 54, 11) prop=0.3528
+  color_3: RGB(171, 53, 16) prop=0.1440
+  color_4: RGB(151, 71, 48) prop=0.0721
+  color_5: RGB(127, 83, 75) prop=0.0255

@@ -1,0 +1,8 @@
+Source: jade/1531
+Trial 59: n_colors=3, difficulty=0.10
+
+  Color 1: RGB(116, 149, 117)  prop=0.2368
+  Color 2: RGB(241, 241, 237)  prop=0.2280
+  Color 3: RGB( 78, 106,  77)  prop=0.2067
+  Color 4: RGB( 48,  55,  40)  prop=0.1883
+  Color 5: RGB(158, 185, 158)  prop=0.1402

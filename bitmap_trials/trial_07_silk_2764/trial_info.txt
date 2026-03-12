@@ -1,0 +1,24 @@
+trial_id: 7
+source: silk/2764
+n_colors: 4
+difficulty_shift: 0.30
+distractor_proportions: 0.3399, 0.2957, 0.1858, 0.1787
+oddball_proportions: 0.1899, 0.2957, 0.1858, 0.3287
+
+[original]
+  color_1: RGB(201, 139, 146) prop=0.3399
+  color_2: RGB(222, 169, 182) prop=0.2957
+  color_3: RGB(175, 103, 105) prop=0.1858
+  color_4: RGB(162, 83, 83) prop=0.1787
+
+[lum_eq]
+  color_1: RGB(186, 125, 132) prop=0.3399
+  color_2: RGB(178, 128, 141) prop=0.2957
+  color_3: RGB(195, 121, 123) prop=0.1858
+  color_4: RGB(202, 118, 117) prop=0.1787
+
+[chroma_boost_lum_eq]
+  color_1: RGB(205, 115, 128) prop=0.3399
+  color_2: RGB(195, 120, 140) prop=0.2957
+  color_3: RGB(218, 108, 114) prop=0.1858
+  color_4: RGB(227, 102, 105) prop=0.1787

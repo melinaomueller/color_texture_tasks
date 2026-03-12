@@ -1,0 +1,8 @@
+Source: gauze/1245
+Trial 4: n_colors=5, difficulty=0.30
+
+  Color 1: RGB(231, 218, 197)  prop=0.2894
+  Color 2: RGB(145,  88,  51)  prop=0.2618
+  Color 3: RGB(107,  58,  34)  prop=0.2127
+  Color 4: RGB(189, 176, 157)  prop=0.1417
+  Color 5: RGB(154, 125, 100)  prop=0.0944

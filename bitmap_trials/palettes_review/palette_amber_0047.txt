@@ -1,0 +1,8 @@
+Source: amber/0047
+Trial 26: n_colors=5, difficulty=0.20
+
+  Color 1: RGB(172,  11,   5)  prop=0.3423
+  Color 2: RGB(108,   9,   3)  prop=0.2662
+  Color 3: RGB(236,  39,   8)  prop=0.2362
+  Color 4: RGB(250, 167,  10)  prop=0.1509
+  Color 5: RGB(253, 252, 212)  prop=0.0044

@@ -1,0 +1,21 @@
+trial_id: 59
+source: jade/1531
+n_colors: 3
+difficulty_shift: 0.10
+distractor_proportions: 0.3950, 0.3770, 0.2280
+oddball_proportions: 0.3450, 0.3770, 0.2780
+
+[original]
+  color_1: RGB(64, 82, 59) prop=0.3950
+  color_2: RGB(132, 162, 132) prop=0.3770
+  color_3: RGB(241, 241, 237) prop=0.2280
+
+[lum_eq]
+  color_1: RGB(140, 160, 134) prop=0.3950
+  color_2: RGB(132, 162, 132) prop=0.3770
+  color_3: RGB(155, 155, 151) prop=0.2280
+
+[chroma_boost_lum_eq]
+  color_1: RGB(133, 163, 124) prop=0.3950
+  color_2: RGB(120, 166, 121) prop=0.3770
+  color_3: RGB(155, 155, 149) prop=0.2280

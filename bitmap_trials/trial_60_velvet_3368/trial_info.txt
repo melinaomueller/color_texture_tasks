@@ -1,0 +1,21 @@
+trial_id: 60
+source: velvet/3368
+n_colors: 3
+difficulty_shift: 0.10
+distractor_proportions: 0.4579, 0.3223, 0.2198
+oddball_proportions: 0.4079, 0.3723, 0.2198
+
+[original]
+  color_1: RGB(59, 23, 23) prop=0.4579
+  color_2: RGB(152, 26, 27) prop=0.3223
+  color_3: RGB(105, 24, 23) prop=0.2198
+
+[lum_eq]
+  color_1: RGB(83, 44, 43) prop=0.4579
+  color_2: RGB(122, 0, 3) prop=0.3223
+  color_3: RGB(106, 25, 23) prop=0.2198
+
+[chroma_boost_lum_eq]
+  color_1: RGB(94, 36, 37) prop=0.4579
+  color_2: RGB(149, 0, 0) prop=0.3223
+  color_3: RGB(125, 0, 5) prop=0.2198

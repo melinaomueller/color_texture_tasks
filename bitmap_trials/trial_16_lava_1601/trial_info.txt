@@ -1,0 +1,27 @@
+trial_id: 16
+source: lava/1601
+n_colors: 5
+difficulty_shift: 0.25
+distractor_proportions: 0.4857, 0.2437, 0.1500, 0.0719, 0.0487
+oddball_proportions: 0.3607, 0.2437, 0.1500, 0.0719, 0.1737
+
+[original]
+  color_1: RGB(85, 76, 77) prop=0.4857
+  color_2: RGB(50, 40, 41) prop=0.2437
+  color_3: RGB(246, 120, 78) prop=0.1500
+  color_4: RGB(250, 215, 87) prop=0.0719
+  color_5: RGB(207, 55, 26) prop=0.0487
+
+[lum_eq]
+  color_1: RGB(126, 116, 117) prop=0.4857
+  color_2: RGB(128, 116, 117) prop=0.2437
+  color_3: RGB(200, 81, 43) prop=0.1500
+  color_4: RGB(141, 117, 0) prop=0.0719
+  color_5: RGB(216, 63, 33) prop=0.0487
+
+[chroma_boost_lum_eq]
+  color_1: RGB(130, 115, 117) prop=0.4857
+  color_2: RGB(132, 114, 116) prop=0.2437
+  color_3: RGB(229, 41, 0) prop=0.1500
+  color_4: RGB(142, 117, 0) prop=0.0719
+  color_5: RGB(252, 0, 0) prop=0.0487

@@ -1,0 +1,8 @@
+Source: marble/1756
+Trial 51: n_colors=5, difficulty=0.10
+
+  Color 1: RGB( 88, 143, 104)  prop=0.3059
+  Color 2: RGB( 71, 125,  79)  prop=0.2505
+  Color 3: RGB(100, 161, 134)  prop=0.1937
+  Color 4: RGB( 97, 190, 181)  prop=0.1399
+  Color 5: RGB( 60, 169, 159)  prop=0.1100

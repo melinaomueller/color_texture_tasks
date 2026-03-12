@@ -1,0 +1,24 @@
+trial_id: 44
+source: opal/2008
+n_colors: 4
+difficulty_shift: 0.15
+distractor_proportions: 0.3433, 0.2863, 0.2082, 0.1622
+oddball_proportions: 0.2683, 0.3613, 0.2082, 0.1622
+
+[original]
+  color_1: RGB(140, 110, 62) prop=0.3433
+  color_2: RGB(78, 64, 36) prop=0.2863
+  color_3: RGB(38, 29, 21) prop=0.2082
+  color_4: RGB(110, 131, 166) prop=0.1622
+
+[lum_eq]
+  color_1: RGB(106, 79, 33) prop=0.3433
+  color_2: RGB(97, 82, 53) prop=0.2863
+  color_3: RGB(93, 82, 72) prop=0.2082
+  color_4: RGB(63, 85, 117) prop=0.1622
+
+[chroma_boost_lum_eq]
+  color_1: RGB(112, 77, 0) prop=0.3433
+  color_2: RGB(101, 81, 36) prop=0.2863
+  color_3: RGB(97, 81, 67) prop=0.2082
+  color_4: RGB(42, 85, 134) prop=0.1622

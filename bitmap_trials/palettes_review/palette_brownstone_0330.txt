@@ -1,0 +1,8 @@
+Source: brownstone/0330
+Trial 18: n_colors=4, difficulty=0.25
+
+  Color 1: RGB(212, 155,  73)  prop=0.3227
+  Color 2: RGB(233, 191, 121)  prop=0.2399
+  Color 3: RGB(187, 109,  35)  prop=0.2346
+  Color 4: RGB(202, 195, 180)  prop=0.1110
+  Color 5: RGB( 45,  30,  20)  prop=0.0917

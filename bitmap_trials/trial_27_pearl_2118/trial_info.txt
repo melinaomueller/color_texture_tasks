@@ -1,0 +1,27 @@
+trial_id: 27
+source: pearl/2118
+n_colors: 5
+difficulty_shift: 0.20
+distractor_proportions: 0.2858, 0.2586, 0.2260, 0.1249, 0.1047
+oddball_proportions: 0.1858, 0.2586, 0.2260, 0.2249, 0.1047
+
+[original]
+  color_1: RGB(176, 164, 139) prop=0.2858
+  color_2: RGB(150, 134, 102) prop=0.2586
+  color_3: RGB(112, 93, 67) prop=0.2260
+  color_4: RGB(54, 45, 35) prop=0.1249
+  color_5: RGB(199, 200, 197) prop=0.1047
+
+[lum_eq]
+  color_1: RGB(136, 125, 101) prop=0.2858
+  color_2: RGB(140, 125, 93) prop=0.2586
+  color_3: RGB(144, 123, 96) prop=0.2260
+  color_4: RGB(136, 125, 113) prop=0.1249
+  color_5: RGB(126, 127, 124) prop=0.1047
+
+[chroma_boost_lum_eq]
+  color_1: RGB(140, 125, 89) prop=0.2858
+  color_2: RGB(145, 124, 76) prop=0.2586
+  color_3: RGB(151, 122, 81) prop=0.2260
+  color_4: RGB(140, 124, 106) prop=0.1249
+  color_5: RGB(126, 127, 123) prop=0.1047

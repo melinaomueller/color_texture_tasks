@@ -1,0 +1,8 @@
+Source: copper/0717
+Trial 37: n_colors=5, difficulty=0.15
+
+  Color 1: RGB(100,  68,  47)  prop=0.3637
+  Color 2: RGB( 51,  31,  21)  prop=0.3071
+  Color 3: RGB(131, 115, 104)  prop=0.1567
+  Color 4: RGB(178, 171, 164)  prop=0.1018
+  Color 5: RGB(234, 229, 221)  prop=0.0707

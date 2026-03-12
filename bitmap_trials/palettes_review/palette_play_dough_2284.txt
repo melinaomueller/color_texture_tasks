@@ -1,0 +1,8 @@
+Source: play_dough/2284
+Trial 39: n_colors=5, difficulty=0.15
+
+  Color 1: RGB( 99,  62,  59)  prop=0.3082
+  Color 2: RGB(207, 130,  84)  prop=0.2182
+  Color 3: RGB(137, 108, 157)  prop=0.1831
+  Color 4: RGB(213, 217, 203)  prop=0.1717
+  Color 5: RGB(174, 203, 122)  prop=0.1188
