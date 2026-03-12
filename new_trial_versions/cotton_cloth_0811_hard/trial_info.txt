@@ -1,0 +1,12 @@
+Trial: cotton_cloth_0811_hard
+Category: cotton_cloth
+Source image: 0811
+Difficulty: hard
+Chroma distance: 0.169591
+L* difference: 0.93
+
+Part 1 is the oddball:
+  part1: mosaic_cotton_cloth_0811_a3_r3_c3.png
+  part2: mosaic_cotton_cloth_0811_a3_r3_c4.png
+  part3: mosaic_cotton_cloth_0811_a4_r0_c1.png
+  part4: mosaic_cotton_cloth_0811_a4_r0_c2.png

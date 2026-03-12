@@ -1,0 +1,12 @@
+Trial: trial43_flannel_1058_hard
+Category: flannel
+Source image: 1058
+Difficulty: hard
+Chroma distance: 0.020408
+L* difference: 1.77
+
+Part 1 is the oddball:
+  part1: mosaic_flannel_1058_a4_r0_c1.png
+  part2: mosaic_flannel_1058_a2_r0_c2.png
+  part3: mosaic_flannel_1058_a2_r1_c1.png
+  part4: mosaic_flannel_1058_a4_r0_c3.png

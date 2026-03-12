@@ -1,0 +1,12 @@
+Trial: trial63_oilcloth_1928_easy
+Category: oilcloth
+Source image: 1928
+Difficulty: easy
+Chroma distance: 0.877481
+L* difference: 0.87
+
+Part 1 is the oddball:
+  part1: mosaic_oilcloth_1928_a2_r3_c2.png
+  part2: mosaic_oilcloth_1928_a0_r1_c2.png
+  part3: mosaic_oilcloth_1928_a0_r2_c2.png
+  part4: mosaic_oilcloth_1928_a0_r3_c2.png

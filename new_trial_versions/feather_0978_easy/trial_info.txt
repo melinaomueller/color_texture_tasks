@@ -1,0 +1,12 @@
+Trial: feather_0978_easy
+Category: feather
+Source image: 0978
+Difficulty: easy
+Chroma distance: 0.937736
+L* difference: 0.53
+
+Part 1 is the oddball:
+  part1: mosaic_feather_0978_a1_r2_c3.png
+  part2: mosaic_feather_0978_a3_r0_c4.png
+  part3: mosaic_feather_0978_a3_r0_c5.png
+  part4: mosaic_feather_0978_a3_r1_c5.png

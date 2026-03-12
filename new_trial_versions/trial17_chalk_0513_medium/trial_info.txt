@@ -1,0 +1,12 @@
+Trial: trial17_chalk_0513_medium
+Category: chalk
+Source image: 0513
+Difficulty: medium
+Chroma distance: 0.073440
+L* difference: 1.57
+
+Part 1 is the oddball:
+  part1: mosaic_chalk_0513_a0_r2_c5.png
+  part2: mosaic_chalk_0513_a0_r0_c3.png
+  part3: mosaic_chalk_0513_a0_r0_c4.png
+  part4: mosaic_chalk_0513_a3_r2_c2.png

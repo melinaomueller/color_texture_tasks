@@ -1,0 +1,12 @@
+Trial: trial36_crepe_paper_0848_easy
+Category: crepe_paper
+Source image: 0848
+Difficulty: easy
+Chroma distance: 0.625089
+L* difference: 1.34
+
+Part 1 is the oddball:
+  part1: mosaic_crepe_paper_0848_a0_r3_c1.png
+  part2: mosaic_crepe_paper_0848_a1_r0_c1.png
+  part3: mosaic_crepe_paper_0848_a1_r0_c2.png
+  part4: mosaic_crepe_paper_0848_a1_r1_c2.png

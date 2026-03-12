@@ -1,0 +1,12 @@
+Trial: trial14_cashmere_0437_medium
+Category: cashmere
+Source image: 0437
+Difficulty: medium
+Chroma distance: 0.105419
+L* difference: 1.17
+
+Part 1 is the oddball:
+  part1: mosaic_cashmere_0437_a0_r0_c5.png
+  part2: mosaic_cashmere_0437_a4_r0_c3.png
+  part3: mosaic_cashmere_0437_a4_r0_c5.png
+  part4: mosaic_cashmere_0437_a4_r2_c4.png

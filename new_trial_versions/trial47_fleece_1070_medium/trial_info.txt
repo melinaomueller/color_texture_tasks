@@ -1,0 +1,12 @@
+Trial: trial47_fleece_1070_medium
+Category: fleece
+Source image: 1070
+Difficulty: medium
+Chroma distance: 0.183432
+L* difference: 0.82
+
+Part 1 is the oddball:
+  part1: mosaic_fleece_1070_a0_r2_c5.png
+  part2: mosaic_fleece_1070_a0_r3_c1.png
+  part3: mosaic_fleece_1070_a2_r3_c3.png
+  part4: mosaic_fleece_1070_a2_r3_c4.png

@@ -1,0 +1,12 @@
+Trial: coral_0736_hard
+Category: coral
+Source image: 0736
+Difficulty: hard
+Chroma distance: 0.020747
+L* difference: 1.96
+
+Part 1 is the oddball:
+  part1: mosaic_coral_0736_a0_r2_c2.png
+  part2: mosaic_coral_0736_a0_r0_c1.png
+  part3: mosaic_coral_0736_a0_r0_c3.png
+  part4: mosaic_coral_0736_a0_r0_c5.png

@@ -1,0 +1,12 @@
+Trial: coral_0736_easy
+Category: coral
+Source image: 0736
+Difficulty: easy
+Chroma distance: 0.617535
+L* difference: 1.33
+
+Part 1 is the oddball:
+  part1: mosaic_coral_0736_a3_r3_c4.png
+  part2: mosaic_coral_0736_a0_r0_c3.png
+  part3: mosaic_coral_0736_a0_r0_c5.png
+  part4: mosaic_coral_0736_a0_r1_c5.png

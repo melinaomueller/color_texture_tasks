@@ -1,0 +1,12 @@
+Trial: trial54_jelly_1546_easy
+Category: jelly
+Source image: 1546
+Difficulty: easy
+Chroma distance: 0.138963
+L* difference: 0.02
+
+Part 1 is the oddball:
+  part1: mosaic_jelly_1546_a0_r3_c2.png
+  part2: mosaic_jelly_1546_a0_r0_c4.png
+  part3: mosaic_jelly_1546_a0_r1_c3.png
+  part4: mosaic_jelly_1546_a0_r1_c4.png

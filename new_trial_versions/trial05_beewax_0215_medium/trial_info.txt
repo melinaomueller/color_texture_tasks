@@ -1,0 +1,12 @@
+Trial: trial05_beewax_0215_medium
+Category: beewax
+Source image: 0215
+Difficulty: medium
+Chroma distance: 0.118208
+L* difference: 1.48
+
+Part 1 is the oddball:
+  part1: mosaic_beewax_0215_a2_r0_c1.png
+  part2: mosaic_beewax_0215_a1_r0_c4.png
+  part3: mosaic_beewax_0215_a1_r0_c5.png
+  part4: mosaic_beewax_0215_a1_r1_c1.png

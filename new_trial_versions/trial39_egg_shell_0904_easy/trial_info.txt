@@ -1,0 +1,12 @@
+Trial: trial39_egg_shell_0904_easy
+Category: egg_shell
+Source image: 0904
+Difficulty: easy
+Chroma distance: 0.969444
+L* difference: 2.00
+
+Part 1 is the oddball:
+  part1: mosaic_egg_shell_0904_a2_r2_c5.png
+  part2: mosaic_egg_shell_0904_a4_r1_c1.png
+  part3: mosaic_egg_shell_0904_a4_r2_c1.png
+  part4: mosaic_egg_shell_0904_a4_r3_c1.png

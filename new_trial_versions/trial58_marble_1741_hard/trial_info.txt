@@ -1,0 +1,12 @@
+Trial: trial58_marble_1741_hard
+Category: marble
+Source image: 1741
+Difficulty: hard
+Chroma distance: 0.022939
+L* difference: 0.29
+
+Part 1 is the oddball:
+  part1: mosaic_marble_1741_a2_r1_c5.png
+  part2: mosaic_marble_1741_a2_r0_c3.png
+  part3: mosaic_marble_1741_a2_r0_c4.png
+  part4: mosaic_marble_1741_a2_r0_c5.png

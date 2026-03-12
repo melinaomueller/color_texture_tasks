@@ -1,0 +1,12 @@
+Trial: trial02_bark_0193_medium
+Category: bark
+Source image: 0193
+Difficulty: medium
+Chroma distance: 0.056712
+L* difference: 1.04
+
+Part 1 is the oddball:
+  part1: mosaic_bark_0193_a1_r0_c3.png
+  part2: mosaic_bark_0193_a3_r0_c1.png
+  part3: mosaic_bark_0193_a3_r0_c2.png
+  part4: mosaic_bark_0193_a3_r0_c4.png

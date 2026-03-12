@@ -1,0 +1,12 @@
+Trial: trial51_flint_1092_easy
+Category: flint
+Source image: 1092
+Difficulty: easy
+Chroma distance: 0.665970
+L* difference: 0.48
+
+Part 1 is the oddball:
+  part1: mosaic_flint_1092_a1_r3_c5.png
+  part2: mosaic_flint_1092_a4_r1_c3.png
+  part3: mosaic_flint_1092_a4_r2_c3.png
+  part4: mosaic_flint_1092_a4_r2_c4.png

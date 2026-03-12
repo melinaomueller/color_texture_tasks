@@ -1,0 +1,12 @@
+Trial: trial11_bubble_wrap_0367_medium
+Category: bubble_wrap
+Source image: 0367
+Difficulty: medium
+Chroma distance: 0.043123
+L* difference: 0.71
+
+Part 1 is the oddball:
+  part1: mosaic_bubble_wrap_0367_a4_r3_c4.png
+  part2: mosaic_bubble_wrap_0367_a0_r2_c4.png
+  part3: mosaic_bubble_wrap_0367_a2_r2_c4.png
+  part4: mosaic_bubble_wrap_0367_a2_r3_c3.png
