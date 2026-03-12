@@ -1,0 +1,11 @@
+Trial: trial12_chalk_0509
+First image is the oddball:
+  oddball: mosaic_chalk_0509_a1_r2_c1.png
+  distractor_1: mosaic_chalk_0509_a1_r1_c1.png
+  distractor_2: mosaic_chalk_0509_a1_r0_c5.png
+  distractor_3: mosaic_chalk_0509_a1_r0_c2.png
+
+Versions:
+  *_original.png         — no changes
+  *_L_equalized.png      — all tiles same L*, color only
+  *_chroma_equalized.png — all tiles same a*b*, luminance only

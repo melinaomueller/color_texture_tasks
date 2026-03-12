@@ -1,0 +1,11 @@
+Trial: trial13_cellophane_0454
+First image is the oddball:
+  oddball: mosaic_cellophane_0454_a3_r3_c5.png
+  distractor_1: mosaic_cellophane_0454_a3_r2_c5.png
+  distractor_2: mosaic_cellophane_0454_a3_r2_c1.png
+  distractor_3: mosaic_cellophane_0454_a3_r1_c5.png
+
+Versions:
+  *_original.png         — no changes
+  *_L_equalized.png      — all tiles same L*, color only
+  *_chroma_equalized.png — all tiles same a*b*, luminance only

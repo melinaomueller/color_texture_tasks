@@ -1,0 +1,11 @@
+Trial: trial16_sequin_2693
+First image is the oddball:
+  oddball: mosaic_sequin_2693_a1_r3_c5.png
+  distractor_1: mosaic_sequin_2693_a1_r2_c5.png
+  distractor_2: mosaic_sequin_2693_a1_r1_c5.png
+  distractor_3: mosaic_sequin_2693_a1_r2_c1.png
+
+Versions:
+  *_original.png         — no changes
+  *_L_equalized.png      — all tiles same L*, color only
+  *_chroma_equalized.png — all tiles same a*b*, luminance only
