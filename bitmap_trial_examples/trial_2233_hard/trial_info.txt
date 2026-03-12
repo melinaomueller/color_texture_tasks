@@ -1,0 +1,13 @@
+Source: /Users/momueller/Dropbox (Personal)/Vandy/Projects/SceneFactor_OPLab/Melina/STUFF_enhanced_dataset_3514_images/plastic/2233.jpg
+Colors (k=5):
+  Color 1: RGB(214, 216, 195) — 33.0%
+  Color 2: RGB(7, 79, 170) — 24.2%
+  Color 3: RGB(96, 138, 213) — 20.1%
+  Color 4: RGB(3, 32, 80) — 16.0%
+  Color 5: RGB(106, 140, 130) — 6.8%
+
+Difficulty: hard (shift=0.1)
+Distractor proportions: ['0.330', '0.242', '0.201', '0.160', '0.068']
+Oddball proportions:    ['0.230', '0.342', '0.201', '0.160', '0.068']
+Grid: 10x10, Tile: 20px
+Seed: 42
