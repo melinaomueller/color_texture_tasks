@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Version Comparison Task</title>
+  <script src="https://unpkg.com/jspsych@7.3.4"></script>
+  <script src="https://unpkg.com/@jspsych/plugin-html-keyboard-response@1.1.3"></script>
+  <script src="https://unpkg.com/@jspsych/plugin-preload@1.1.3"></script>
+  <script src="https://unpkg.com/@jspsych/plugin-html-button-response@1.1.3"></script>
+  <link rel="stylesheet" href="https://unpkg.com/jspsych@7.3.4/css/jspsych.css">
+  <style>
+    .comparison-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+    .version-row {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 16px;
+    }
+    .version-label {
+      font-size: 22px;
+      font-weight: bold;
+      width: 30px;
+      text-align: center;
+    }
+    .image-group {
+      display: flex;
+      flex-direction: row;
+      gap: 12px;
+    }
+    .oddball-col {
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      border: 4px solid transparent;
+      padding: 4px;
+      border-radius: 6px;
+      transition: border-color 0.15s;
+    }
+    .oddball-col:hover {
+      border-color: #666;
+    }
+    .oddball-col img {
+      width: 150px;
+      height: 150px;
+      display: block;
+    }
+    .trial-counter {
+      text-align: center;
+      font-size: 14px;
+      color: #888;
+      margin-bottom: 4px;
+    }
+    .trial-prompt {
+      text-align: center;
+      font-size: 18px;
+      margin-top: 16px;
+      margin-bottom: 4px;
+    }
+    .feedback-banner {
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+      margin-top: 12px;
+    }
+    .feedback-banner.correct {
+      color: #2e7d32;
+    }
+    .feedback-banner.incorrect {
+      color: #c62828;
+    }
+    .col-correct {
+      border-color: #2e7d32 !important;
+    }
+    .col-incorrect {
+      border-color: #c62828 !important;
+    }
+    .response-area {
+      display: none;
+      text-align: center;
+      margin-top: 16px;
+    }
+    .response-area textarea {
+      width: 500px;
+      height: 80px;
+      font-size: 14px;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      resize: vertical;
+    }
+    .response-area button {
+      display: block;
+      margin: 10px auto 0;
+      padding: 8px 24px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body></body>
+<script>
+const jsPsych = initJsPsych({
+  on_finish: function() {
+    jsPsych.data.get().filter({task: 'comparison'}).localSave('csv', 'comparison_data.csv');
+  }
+});
+
+// ── Trial definitions ──────────────────────────────────────────────────────
+const STIM_DIR = '../bitmap_trials/jspsych_stimuli/';
+
+const trial_list = [
+  {id:1,cat:"brick",img:"0291",diff:0.30,k:5},
+  {id:2,cat:"amethyst",img:"0064",diff:0.30,k:5},
+  {id:3,cat:"fleece",img:"1064",diff:0.30,k:5},
+  {id:4,cat:"gauze",img:"1245",diff:0.30,k:5},
+  {id:5,cat:"emerald",img:"0938",diff:0.30,k:4},
+  {id:6,cat:"cellophane",img:"0454",diff:0.30,k:4},
+  {id:7,cat:"silk",img:"2764",diff:0.30,k:4},
+  // {id:8,cat:"porcelain",img:"2326",diff:0.30,k:4},   // dropped: "not a good trial"
+  {id:9,cat:"plastic",img:"2241",diff:0.30,k:3},
+  {id:10,cat:"chiffon",img:"0580",diff:0.30,k:3},
+  {id:11,cat:"granite",img:"1331",diff:0.30,k:3},
+  {id:12,cat:"ember",img:"0916",diff:0.30,k:3},
+  {id:13,cat:"quartzite",img:"2383",diff:0.25,k:5},
+  {id:14,cat:"moss",img:"1832",diff:0.25,k:5},
+  {id:15,cat:"sandstone",img:"2606",diff:0.25,k:5},
+  {id:16,cat:"lava",img:"1601",diff:0.25,k:5},
+  {id:17,cat:"onyx",img:"1997",diff:0.25,k:4},
+  {id:18,cat:"brownstone",img:"0330",diff:0.25,k:4},
+  {id:19,cat:"terracotta",img:"3119",diff:0.25,k:4},
+  {id:20,cat:"oilpaper",img:"1955",diff:0.25,k:4},
+  {id:21,cat:"sapphire",img:"2631",diff:0.25,k:3},
+  {id:22,cat:"gelatin",img:"1275",diff:0.25,k:3},
+  {id:23,cat:"resin",img:"2433",diff:0.25,k:3},
+  {id:24,cat:"bone",img:"0228",diff:0.25,k:3},
+  {id:25,cat:"satin",img:"2653",diff:0.20,k:5},
+  {id:26,cat:"amber",img:"0047",diff:0.20,k:5},
+  // {id:27,cat:"pearl",img:"2118",diff:0.20,k:5},       // dropped: "drop this trial"
+  {id:28,cat:"leather",img:"1634",diff:0.25,k:5},        // was 0.20; bumped — "reduce difficulty for A and C"
+  // {id:29,cat:"tin",img:"3134",diff:0.20,k:4},          // dropped: "A and B are not good at all"
+  {id:30,cat:"plaster",img:"2215",diff:0.20,k:4},
+  // {id:31,cat:"cobalt",img:"0659",diff:0.20,k:4},       // dropped: "isn't good. drop it"
+  {id:32,cat:"satinwood",img:"2674",diff:0.20,k:4},
+  {id:33,cat:"pottery",img:"2342",diff:0.20,k:3},
+  {id:34,cat:"shell",img:"2711",diff:0.20,k:3},
+  {id:35,cat:"garnet",img:"1231",diff:0.20,k:3},
+  {id:36,cat:"frankincense",img:"1176",diff:0.20,k:3},
+  // {id:37,cat:"copper",img:"0717",diff:0.15,k:5},       // dropped: "not great...drop it or switch it out"
+  {id:38,cat:"wool",img:"3452",diff:0.15,k:5},
+  {id:39,cat:"play_dough",img:"2284",diff:0.15,k:5},
+  {id:40,cat:"crepe_paper",img:"0837",diff:0.20,k:5},    // was 0.15; bumped — "very hard...consider making it easier"
+  {id:41,cat:"foliage",img:"1156",diff:0.15,k:4},
+  {id:42,cat:"rhinestone",img:"2450",diff:0.15,k:4},
+  {id:43,cat:"bronze",img:"0311",diff:0.15,k:4},
+  {id:44,cat:"opal",img:"2008",diff:0.15,k:4},
+  {id:45,cat:"sequin",img:"2693",diff:0.15,k:3},
+  {id:46,cat:"flame",img:"1025",diff:0.15,k:3},
+  {id:47,cat:"moonstone",img:"1802",diff:0.15,k:3},
+  {id:48,cat:"coral",img:"0739",diff:0.15,k:3},
+  // {id:49,cat:"clay",img:"0627",diff:0.10,k:5},         // dropped: "this one is ass"
+  {id:50,cat:"sponge",img:"2924",diff:0.15,k:5},         // was 0.10; bumped (near-chance level)
+  {id:51,cat:"marble",img:"1756",diff:0.15,k:5},         // was 0.10; bumped — "make A slightly easier"
+  {id:52,cat:"suede",img:"2973",diff:0.15,k:5},          // was 0.10; bumped (near-chance level)
+  // {id:53,cat:"ice",img:"1462",diff:0.10,k:4},          // dropped: "pain in the ass"
+  {id:54,cat:"fluorine",img:"1108",diff:0.15,k:4},       // was 0.10; bumped — "make A slightly easier"
+  {id:55,cat:"flint",img:"1090",diff:0.15,k:4},          // was 0.10; bumped (near-chance level)
+  {id:56,cat:"egg_shell",img:"0904",diff:0.15,k:4},      // was 0.10; bumped — "modify C so oddball is more apparent"
+  {id:57,cat:"ruby",img:"2514",diff:0.15,k:3},           // was 0.10; bumped (near-chance level)
+  {id:58,cat:"paint",img:"2029",diff:0.15,k:3},          // was 0.10; bumped (near-chance level)
+  // {id:59,cat:"jade",img:"1531",diff:0.10,k:3},         // dropped: "problematic...drop it"
+  // {id:60,cat:"velvet",img:"3368",diff:0.10,k:3},       // dropped: "change it out"
+  {id:61,cat:"paint",img:"2023",diff:0.30,k:5},
+  {id:62,cat:"paint",img:"2037",diff:0.25,k:4},
+  {id:63,cat:"paint",img:"2027",diff:0.20,k:3},
+  {id:64,cat:"paint",img:"2030",diff:0.15,k:5},
+  {id:65,cat:"paint",img:"2033",diff:0.15,k:4},          // was 0.10; bumped — "slightly reduce difficulty in A"
+  {id:66,cat:"paint",img:"2036",diff:0.30,k:3},
+  {id:67,cat:"paint",img:"2039",diff:0.25,k:5},
+  {id:68,cat:"paint",img:"2042",diff:0.20,k:4},
+  {id:69,cat:"play_dough",img:"2270",diff:0.30,k:5},
+  {id:70,cat:"play_dough",img:"2271",diff:0.25,k:4},
+  {id:71,cat:"play_dough",img:"2273",diff:0.20,k:3},
+  // {id:72,cat:"play_dough",img:"2274",diff:0.15,k:5},   // dropped: "make it slightly easier or drop it"
+  {id:73,cat:"play_dough",img:"2277",diff:0.15,k:4},     // was 0.10; bumped — "change darkest hue; increase contrast"
+  {id:74,cat:"play_dough",img:"2279",diff:0.30,k:3},
+  // {id:75,cat:"play_dough",img:"2281",diff:0.25,k:5},   // dropped: "not good"
+  {id:76,cat:"play_dough",img:"2283",diff:0.20,k:4},
+  {id:77,cat:"play_dough",img:"2273",diff:0.20,k:3},
+  {id:78,cat:"soap",img:"2876",diff:0.30,k:5},
+  {id:79,cat:"soap",img:"2883",diff:0.20,k:4},
+  // {id:80,cat:"soap",img:"2870",diff:0.10,k:3},         // dropped: "switch this one out"
+  {id:81,cat:"algae",img:"0001",diff:0.25,k:5},
+  {id:82,cat:"crepe_paper",img:"0841",diff:0.20,k:4},    // was 0.15; bumped — "make oddball in A/C more apparent"
+  {id:83,cat:"crepe_paper",img:"0838",diff:0.25,k:5},
+  {id:84,cat:"foliage",img:"1149",diff:0.20,k:4},
+  {id:85,cat:"flannel",img:"1057",diff:0.15,k:5},
+  {id:86,cat:"microfiber",img:"1783",diff:0.15,k:3},     // was 0.10; bumped — "keep B but make it slightly easier"
+];
+
+// ── All 3 versions ─────────────────────────────────────────────────────────
+const versions = ['original', 'lum_eq', 'chroma_boost_lum_eq'];
+
+// ── Build image paths ──────────────────────────────────────────────────────
+function trialImages(t, version) {
+  const tid = String(t.id).padStart(2, '0');
+  const oddball = `${STIM_DIR}t${tid}_part1_oddball_${version}.png`;
+  const distractors = [2, 3, 4].map(p =>
+    `${STIM_DIR}t${tid}_part${p}_distractor_${version}.png`
+  );
+  return { oddball, distractors };
+}
+
+// ── Preload all images ─────────────────────────────────────────────────────
+const all_images = [];
+trial_list.forEach(t => {
+  versions.forEach(v => {
+    const imgs = trialImages(t, v);
+    all_images.push(imgs.oddball, ...imgs.distractors);
+  });
+});
+
+// ── Shuffle helper ─────────────────────────────────────────────────────────
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+// ── Build timeline ─────────────────────────────────────────────────────────
+const timeline = [];
+const total_trials = trial_list.length;
+
+// Preload
+timeline.push({
+  type: jsPsychPreload,
+  images: all_images,
+  show_progress_bar: true,
+  message: '<p>Loading stimuli... (this may take a moment)</p>'
+});
+
+// Instructions
+timeline.push({
+  type: jsPsychHtmlButtonResponse,
+  stimulus: `
+    <div style="max-width: 650px; margin: 0 auto; text-align: left;">
+      <h2>Version Comparison Task</h2>
+      <p>On each trial you will see <strong>three rows</strong> of four color
+      pattern images, labeled <strong>A</strong>, <strong>B</strong>, and
+      <strong>C</strong>.</p>
+      <p>Each row shows the same trial in a different color version. In every
+      row, one of the four images is the "odd one out" &mdash; it has a slightly
+      different color distribution from the other three.</p>
+      <p><strong>Step 1:</strong> Click the <strong>column</strong> that contains
+      the odd one out.</p>
+      <p><strong>Step 2:</strong> You&rsquo;ll see whether you were correct
+      (green outline) or incorrect (red outline). The correct column is always
+      highlighted in green.</p>
+      <p><strong>Step 3:</strong> Write a brief note about why you think you got
+      it right or wrong, then click <em>Continue</em>.</p>
+      <p>There are <strong>${total_trials} trials</strong>. Take your time on each one.</p>
+    </div>
+  `,
+  choices: ['Begin']
+});
+
+// ── Randomize trial order ──────────────────────────────────────────────────
+const shuffled_trials = shuffle([...trial_list]);
+
+shuffled_trials.forEach((t, trial_index) => {
+  const trial_number = trial_index + 1;
+
+  // Randomize version-to-label mapping (A/B/C) for this trial
+  const version_order = shuffle([...versions]);
+
+  // Shuffle oddball position once — same across all 3 rows
+  const positions = [0, 1, 2, 3]; // 0 = oddball, 1/2/3 = distractor index
+  shuffle(positions);
+  const oddball_position = positions.indexOf(0);
+
+  // ── Build grid cells ────────────────────────────────────────────────────
+  const grid_cells = [];
+
+  version_order.forEach((version, row_idx) => {
+    const label = ['A', 'B', 'C'][row_idx];
+    const imgs = trialImages(t, version);
+    const source = [imgs.oddball, imgs.distractors[0], imgs.distractors[1], imgs.distractors[2]];
+    const ordered = positions.map(p => source[p]);
+
+    grid_cells.push(`<div class="version-label" style="grid-row:${row_idx + 1};grid-column:1;">${label}</div>`);
+
+    ordered.forEach((src, col_idx) => {
+      grid_cells.push(
+        `<div style="grid-row:${row_idx + 1};grid-column:${col_idx + 2};">` +
+        `<img src="${src}" alt="stimulus" style="width:150px;height:150px;display:block;">` +
+        `</div>`
+      );
+    });
+  });
+
+  const stimulus_html = `
+    <p class="trial-counter">Trial ${trial_number} of ${total_trials}</p>
+    <p class="trial-prompt" id="prompt-text">Click the column that contains the odd one out.</p>
+    <div style="display:inline-grid;grid-template-columns:30px repeat(4,150px);grid-template-rows:repeat(3,150px);gap:12px;align-items:center;justify-items:center;position:relative;">
+      ${grid_cells.join('')}
+      ${[0,1,2,3].map(col => `
+        <div class="oddball-col" data-col="${col}" id="col-overlay-${col}"
+             style="grid-row:1/4;grid-column:${col + 2};width:100%;height:100%;cursor:pointer;z-index:10;
+                    display:flex;align-items:stretch;border:4px solid transparent;border-radius:6px;"
+             onclick="document.dispatchEvent(new CustomEvent('col-click',{detail:{col:${col}}}))">
+        </div>
+      `).join('')}
+    </div>
+    <div class="feedback-banner" id="feedback-banner"></div>
+    <div class="response-area" id="response-area">
+      <label for="explanation" style="display:block;margin-bottom:6px;">Why do you think you got it right/wrong?</label>
+      <textarea id="explanation" placeholder="Type your explanation here..."></textarea>
+      <button id="continue-btn">Continue</button>
+    </div>
+  `;
+
+  timeline.push({
+    type: jsPsychHtmlKeyboardResponse,
+    stimulus: stimulus_html,
+    choices: 'NO_KEYS',
+    trial_duration: null,
+    data: {
+      task: 'comparison',
+      trial_id: t.id,
+      trial_number: trial_number,
+      category: t.cat,
+      image_id: t.img,
+      difficulty: t.diff,
+      n_colors: t.k,
+      oddball_position: oddball_position,
+      version_a: version_order[0],
+      version_b: version_order[1],
+      version_c: version_order[2]
+    },
+    on_load: function() {
+      const start_time = performance.now();
+      let click_rt = null;
+
+      const handler = function(e) {
+        const col = e.detail.col;
+        const correct = col === oddball_position;
+        click_rt = performance.now() - start_time;
+
+        document.removeEventListener('col-click', handler);
+
+        // Disable further column clicks
+        [0,1,2,3].forEach(c => {
+          const el = document.getElementById('col-overlay-' + c);
+          el.style.pointerEvents = 'none';
+          el.style.cursor = 'default';
+        });
+
+        // Highlight correct column green
+        document.getElementById('col-overlay-' + oddball_position).classList.add('col-correct');
+
+        // If wrong, highlight chosen column red
+        if (!correct) {
+          document.getElementById('col-overlay-' + col).classList.add('col-incorrect');
+        }
+
+        // Update prompt and show feedback
+        const banner = document.getElementById('feedback-banner');
+        if (correct) {
+          banner.classList.add('correct');
+          banner.textContent = 'Correct!';
+        } else {
+          banner.classList.add('incorrect');
+          banner.textContent = 'Incorrect';
+        }
+
+        // Show free response area
+        document.getElementById('response-area').style.display = 'block';
+        document.getElementById('explanation').focus();
+
+        // Continue button finishes the trial
+        document.getElementById('continue-btn').addEventListener('click', function() {
+          const explanation = document.getElementById('explanation').value.trim();
+          jsPsych.finishTrial({
+            response_position: col,
+            correct: correct,
+            rt: click_rt,
+            explanation: explanation
+          });
+        });
+      };
+
+      document.addEventListener('col-click', handler);
+    }
+  });
+});
+
+// End screen
+timeline.push({
+  type: jsPsychHtmlButtonResponse,
+  stimulus: `
+    <div style="text-align:center;">
+      <h2>Task Complete</h2>
+      <p>Thank you! Your data has been saved as <code>comparison_data.csv</code>.</p>
+    </div>
+  `,
+  choices: ['Finish']
+});
+
+jsPsych.run(timeline);
+</script>
+</html>
