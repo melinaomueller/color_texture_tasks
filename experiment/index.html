@@ -9,13 +9,12 @@
   <script src="https://unpkg.com/@jspsych/plugin-html-button-response@1.1.3"></script>
   <link rel="stylesheet" href="https://unpkg.com/jspsych@7.3.4/css/jspsych.css">
   <style>
-    .oddball-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      grid-template-rows: 1fr 1fr;
+    .oddball-row {
+      display: flex;
+      flex-direction: row;
       gap: 20px;
-      max-width: 500px;
-      margin: 0 auto;
+      justify-content: center;
+      align-items: center;
     }
     .oddball-cell {
       cursor: pointer;
@@ -35,6 +34,24 @@
       font-size: 18px;
       margin-bottom: 15px;
     }
+    .trial-counter {
+      text-align: center;
+      font-size: 14px;
+      color: #888;
+      margin-bottom: 8px;
+    }
+    .feedback {
+      text-align: center;
+      font-size: 28px;
+      font-weight: bold;
+      margin-top: 20px;
+    }
+    .feedback.correct {
+      color: #2e7d32;
+    }
+    .feedback.incorrect {
+      color: #c62828;
+    }
   </style>
 </head>
 <body></body>
@@ -46,9 +63,6 @@ const jsPsych = initJsPsych({
 });
 
 // ── Trial definitions ──────────────────────────────────────────────────────
-// Each trial uses the "original" version. The oddball is always part1.
-// Positions are randomized per trial.
-
 const STIM_DIR = '../bitmap_trials/jspsych_stimuli/';
 
 const trial_list = [
@@ -141,10 +155,10 @@ const trial_list = [
 ];
 
 // ── Build image paths and preload list ─────────────────────────────────────
-const version = 'original';  // Change to 'lum_eq' or 'chroma_boost_lum_eq' as needed
+const versions = ['lum_eq', 'chroma_boost_lum_eq'];
 const all_images = [];
 
-function trialImages(t) {
+function trialImages(t, version) {
   const tid = String(t.id).padStart(2, '0');
   const oddball = `${STIM_DIR}t${tid}_part1_oddball_${version}.png`;
   const distractors = [2, 3, 4].map(p =>
@@ -154,8 +168,10 @@ function trialImages(t) {
 }
 
 trial_list.forEach(t => {
-  const imgs = trialImages(t);
-  all_images.push(imgs.oddball, ...imgs.distractors);
+  versions.forEach(v => {
+    const imgs = trialImages(t, v);
+    all_images.push(imgs.oddball, ...imgs.distractors);
+  });
 });
 
 // ── Shuffle helper ─────────────────────────────────────────────────────────
@@ -167,8 +183,17 @@ function shuffle(arr) {
   return arr;
 }
 
+// ── Build expanded trial list (each trial × each version) ─────────────────
+const expanded_trials = [];
+trial_list.forEach(t => {
+  versions.forEach(v => {
+    expanded_trials.push({ ...t, version: v });
+  });
+});
+
 // ── Build timeline ─────────────────────────────────────────────────────────
 const timeline = [];
+const total_trials = expanded_trials.length;
 
 // Preload
 timeline.push({
@@ -185,7 +210,7 @@ timeline.push({
     <div style="max-width: 600px; margin: 0 auto; text-align: left;">
       <h2>Color Oddball Task</h2>
       <p>On each trial you will see <strong>four color pattern images</strong>
-      arranged in a 2&times;2 grid.</p>
+      in a row.</p>
       <p><strong>Three</strong> of the images have the same color distribution.
       <strong>One</strong> image (the "oddball") has a slightly different
       color distribution.</p>
@@ -197,10 +222,10 @@ timeline.push({
   choices: 'ALL_KEYS'
 });
 
-// Fixation + trial for each
-const shuffled_trials = shuffle([...trial_list]);
+// Fixation + trial + feedback for each
+const shuffled_trials = shuffle([...expanded_trials]);
 
-shuffled_trials.forEach(t => {
+shuffled_trials.forEach((t, trial_index) => {
   // Fixation cross
   timeline.push({
     type: jsPsychHtmlKeyboardResponse,
@@ -210,7 +235,7 @@ shuffled_trials.forEach(t => {
   });
 
   // Build the 4 images with position randomization
-  const imgs = trialImages(t);
+  const imgs = trialImages(t, t.version);
   const items = [
     { src: imgs.oddball, is_oddball: true, part: 1 },
     { src: imgs.distractors[0], is_oddball: false, part: 2 },
@@ -220,10 +245,12 @@ shuffled_trials.forEach(t => {
   shuffle(items);
 
   const oddball_position = items.findIndex(x => x.is_oddball);
+  const trial_number = trial_index + 1;
 
-  const grid_html = `
+  const row_html = `
+    <p class="trial-counter">Trial ${trial_number} of ${total_trials}</p>
     <p class="trial-prompt">Click the image that looks different.</p>
-    <div class="oddball-grid">
+    <div class="oddball-row">
       ${items.map((item, i) => `
         <div class="oddball-cell" data-pos="${i}" data-oddball="${item.is_oddball}"
              onclick="document.dispatchEvent(new CustomEvent('oddball-click',{detail:{position:${i}}}))">
@@ -235,18 +262,19 @@ shuffled_trials.forEach(t => {
 
   timeline.push({
     type: jsPsychHtmlKeyboardResponse,
-    stimulus: grid_html,
+    stimulus: row_html,
     choices: 'NO_KEYS',
-    trial_duration: null, // wait for click
+    trial_duration: null,
     data: {
       task: 'oddball',
       trial_id: t.id,
+      trial_number: trial_number,
       category: t.cat,
       image_id: t.img,
       difficulty: t.diff,
       n_colors: t.k,
       oddball_position: oddball_position,
-      version: version
+      version: t.version
     },
     on_load: function() {
       const handler = function(e) {
@@ -262,6 +290,21 @@ shuffled_trials.forEach(t => {
       jsPsych.getCurrentTrial().start_time = performance.now();
       document.addEventListener('oddball-click', handler);
     }
+  });
+
+  // Feedback screen
+  timeline.push({
+    type: jsPsychHtmlKeyboardResponse,
+    stimulus: function() {
+      const last = jsPsych.data.get().last(1).values()[0];
+      if (last.correct) {
+        return '<div class="feedback correct">Correct!</div>';
+      } else {
+        return '<div class="feedback incorrect">Incorrect</div>';
+      }
+    },
+    choices: 'NO_KEYS',
+    trial_duration: 800
   });
 });
 
