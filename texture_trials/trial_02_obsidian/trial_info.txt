@@ -1,0 +1,13 @@
+trial_id: 2
+category: obsidian
+same3_source: obsidian/1895
+diff1_source: obsidian/1892
+min_dist: 200
+normalize: False
+notes: 
+
+distractor crops (x, y):
+  distractor_1: (1812, 2801)
+  distractor_2: (1197, 571)
+  distractor_3: (2144, 84)
+  oddball: (2947, 2799)
