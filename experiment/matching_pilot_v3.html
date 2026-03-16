@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Matching Pilot v3 — Larger Shifts</title>
+  <script src="https://unpkg.com/jspsych@7.3.4"></script>
+  <script src="https://unpkg.com/@jspsych/plugin-html-keyboard-response@1.1.3"></script>
+  <script src="https://unpkg.com/@jspsych/plugin-preload@1.1.3"></script>
+  <script src="https://unpkg.com/@jspsych/plugin-html-button-response@1.1.3"></script>
+  <link rel="stylesheet" href="https://unpkg.com/jspsych@7.3.4/css/jspsych.css">
+  <style>
+    .pilot-row {
+      display: flex; flex-direction: row; gap: 14px;
+      justify-content: center; align-items: flex-start; margin-bottom: 10px;
+    }
+    .pilot-cell { text-align: center; }
+    .pilot-cell img {
+      width: 180px; height: 180px; display: block;
+      border: 3px solid transparent; border-radius: 6px;
+    }
+    .pilot-cell .label { font-size: 12px; font-weight: bold; margin-top: 3px; color: #555; }
+    .foil-img { border-color: #888 !important; }
+    .section-label {
+      text-align: center; font-size: 15px; font-weight: bold;
+      margin: 14px 0 6px 0; color: #333;
+    }
+    .trial-header { text-align: center; font-size: 14px; color: #888; margin-bottom: 4px; }
+    .version-box {
+      display: inline-block; background: #f5f5f5; border: 1px solid #ccc;
+      border-radius: 8px; padding: 10px; margin: 4px; vertical-align: top; text-align: center;
+    }
+    .version-box .vb-label { font-size: 14px; font-weight: bold; margin-bottom: 6px; }
+    .version-box img {
+      width: 180px; height: 180px; display: block;
+      border: 3px solid transparent; border-radius: 6px; margin: 0 auto 3px auto;
+    }
+    .version-box .sub-label { font-size: 11px; color: #666; }
+    .oddball-border { border-color: #1565c0 !important; }
+    .match-border { border-color: #2e7d32 !important; }
+    .versions-row {
+      display: flex; flex-direction: row; gap: 12px;
+      justify-content: center; flex-wrap: wrap; margin-bottom: 10px;
+    }
+    .response-area { max-width: 700px; margin: 16px auto 0 auto; }
+    .response-area textarea {
+      width: 100%; height: 70px; font-size: 14px; padding: 8px;
+      border: 1px solid #aaa; border-radius: 4px; resize: vertical;
+    }
+    .response-area label { display: block; font-size: 14px; margin-bottom: 5px; }
+    .submit-btn {
+      display: block; margin: 10px auto; padding: 10px 30px; font-size: 16px;
+      cursor: pointer; background: #1565c0; color: white; border: none; border-radius: 4px;
+    }
+    .submit-btn:hover { background: #0d47a1; }
+  </style>
+</head>
+<body></body>
+<script>
+const jsPsych = initJsPsych({
+  on_finish: function() {
+    jsPsych.data.get().filter({task: 'matching_pilot_v3'}).localSave('csv', 'matching_pilot_v3_data.csv');
+  }
+});
+
+const STIM_DIR = '../bitmap_trials/jspsych_stimuli/';
+
+const trial_list = [
+  {id:38, cat:"wool", k:5, version:"original", note:"too similar, need more red"},
+  {id:47, cat:"moonstone", k:3, version:"lum_eq", note:"change hue, still not right"},
+  {id:48, cat:"coral", k:3, version:"original", note:"need more red or white space"},
+  {id:54, cat:"fluorine", k:4, version:"original", note:"still very difficult"},
+  {id:57, cat:"ruby", k:3, version:"original", note:"still look very similar"},
+  {id:58, cat:"paint", k:3, version:"chroma_boost_lum_eq", note:"need more/less blue"},
+  {id:85, cat:"flannel", k:5, version:"chroma_boost_lum_eq", note:"purple/gray too similar"},
+];
+
+const DIFFS = [0.25, 0.30, 0.35];
+
+function trialPaths(t) {
+  const tid = String(t.id).padStart(2, '0');
+  const paths = {
+    distractor2: `${STIM_DIR}t${tid}_part2_distractor_${t.version}.png`,
+    distractor3: `${STIM_DIR}t${tid}_part3_distractor_${t.version}.png`,
+    versions: {},
+  };
+  for (const d of DIFFS) {
+    const dl = `d${Math.round(d * 100)}`;
+    paths.versions[d] = {
+      oddball: `${STIM_DIR}t${tid}_regen_oddball_${dl}_${t.version}.png`,
+      match:   `${STIM_DIR}t${tid}_regen_match_${dl}_${t.version}.png`,
+    };
+  }
+  return paths;
+}
+
+const all_images = [];
+trial_list.forEach(t => {
+  const p = trialPaths(t);
+  all_images.push(p.distractor2, p.distractor3);
+  for (const d of DIFFS) {
+    all_images.push(p.versions[d].oddball, p.versions[d].match);
+  }
+});
+
+const timeline = [];
+const total_trials = trial_list.length;
+
+timeline.push({
+  type: jsPsychPreload,
+  images: all_images,
+  show_progress_bar: true,
+  message: '<p>Loading stimuli...</p>'
+});
+
+timeline.push({
+  type: jsPsychHtmlButtonResponse,
+  stimulus: `
+    <div style="max-width:650px; margin:0 auto; text-align:left;">
+      <h2>Matching Pilot v3 — Larger Shifts</h2>
+      <p>These are the <strong>7 remaining problematic trials</strong>.</p>
+      <p>Now testing larger shifts: <strong>0.25, 0.30, 0.35</strong>.</p>
+      <p>Same layout: distractors (grey), then 3 difficulty columns with
+      oddball (blue) and match (green).</p>
+      <p>Pick a difficulty, say "drop", or note what's still wrong.</p>
+    </div>
+  `,
+  choices: ['Begin']
+});
+
+trial_list.forEach((t, trial_index) => {
+  const trial_number = trial_index + 1;
+  const p = trialPaths(t);
+  const tid = String(t.id).padStart(2, '0');
+
+  const versionsHTML = DIFFS.map(d => {
+    const dl = Math.round(d * 100);
+    const v = p.versions[d];
+    return `
+      <div class="version-box">
+        <div class="vb-label">Shift = ${d.toFixed(2)}</div>
+        <img src="${v.oddball}" class="oddball-border" alt="oddball d${dl}">
+        <div class="sub-label">Oddball (study)</div>
+        <img src="${v.match}" class="match-border" alt="match d${dl}">
+        <div class="sub-label">Match (correct)</div>
+      </div>
+    `;
+  }).join('');
+
+  timeline.push({
+    type: jsPsychHtmlKeyboardResponse,
+    stimulus: `
+      <p class="trial-header">Trial ${trial_number} of ${total_trials} —
+        t${tid} / ${t.cat} / ${t.version} (k=${t.k})</p>
+      <p class="trial-header" style="color:#c62828;">Previous note: "${t.note}"</p>
+
+      <div class="section-label">Distractors (foils)</div>
+      <div class="pilot-row">
+        <div class="pilot-cell">
+          <img src="${p.distractor2}" class="foil-img" alt="distractor">
+          <div class="label">Distractor 1</div>
+        </div>
+        <div class="pilot-cell">
+          <img src="${p.distractor3}" class="foil-img" alt="distractor">
+          <div class="label">Distractor 2</div>
+        </div>
+      </div>
+
+      <div class="section-label">Difficulty versions (0.25 / 0.30 / 0.35)</div>
+      <div class="versions-row">${versionsHTML}</div>
+
+      <div class="response-area">
+        <label>Which difficulty works? Or drop? (e.g., "0.30", "drop", notes)</label>
+        <textarea id="pilot-response" placeholder="..."></textarea>
+        <button class="submit-btn" id="submit-btn">Next Trial</button>
+      </div>
+    `,
+    choices: 'NO_KEYS',
+    trial_duration: null,
+    data: {
+      task: 'matching_pilot_v3',
+      trial_id: t.id,
+      trial_number: trial_number,
+      category: t.cat,
+      n_colors: t.k,
+      version: t.version,
+      prev_note: t.note,
+    },
+    on_load: function() {
+      document.getElementById('submit-btn').addEventListener('click', function() {
+        jsPsych.finishTrial({
+          free_response: document.getElementById('pilot-response').value
+        });
+      });
+    }
+  });
+});
+
+timeline.push({
+  type: jsPsychHtmlButtonResponse,
+  stimulus: `
+    <div style="text-align:center;">
+      <h2>Pilot Complete</h2>
+      <p>Data saved as <code>matching_pilot_v3_data.csv</code>.</p>
+    </div>
+  `,
+  choices: ['Finish']
+});
+
+jsPsych.run(timeline);
+</script>
+</html>
