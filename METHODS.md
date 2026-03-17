@@ -118,7 +118,19 @@ Five shift amounts define the difficulty levels:
 
 Larger shifts produce more visually distinct oddballs.
 
-### 6.3 Rationale
+### 6.3 Two Dimensions of Difficulty
+
+Trial difficulty is determined by two factors in combination: the **proportion shift** and the **color version**.
+
+**Proportion shift** controls how many cells differ between oddball and distractors (see Section 6.1). **Color version** controls what perceptual information is available to support discrimination:
+
+- **Original:** Retains native luminance differences between palette colors. Participants can rely on lightness contrast as a cue — e.g., noticing that the oddball has "more bright cells" or "less dark area" — without needing to discriminate hue. These trials are intentionally the easiest.
+- **Luminance-equalized (`lum_eq`):** All colors share the same L\*, removing brightness as a cue. Discrimination must rely on chromatic (hue/saturation) differences between colors. These trials are harder.
+- **Chroma-boosted + L\*-equalized (`chroma_boost_lum_eq`):** Luminance is equalized as above, but a\* and b\* are scaled by 1.5x to amplify chromatic differences. This compensates for low-saturation palettes that would become nearly indistinguishable under luminance equalization alone. These trials are intermediate in difficulty — harder than original (no lightness cue) but easier than plain lum_eq for desaturated materials.
+
+This design is motivated by individual differences: some participants may be highly sensitive to lightness-based proportion changes but poor at hue-based discrimination, or vice versa. By deliberately including easy original-version trials alongside harder luminance-equalized trials, the experiment captures a range of color discrimination strategies rather than measuring only one.
+
+### 6.4 Rationale for Proportion Shifting
 
 Proportion shifting isolates color *ratio* perception as the discrimination cue. Unlike hue or saturation manipulations, this method keeps the exact same set of colors in both oddball and distractor bitmaps, varying only their relative areas. This provides parametric difficulty control without introducing qualitative color differences.
 
@@ -258,13 +270,9 @@ K-means at k=5 captures the dominant color structure of material photographs whi
 
 Proportion shifting provides a continuous, parametric difficulty dimension that is orthogonal to the color palette itself. All four bitmaps in a trial contain exactly the same set of colors; only the relative areas differ. This design isolates sensitivity to color *distribution* rather than sensitivity to color *identity*, and allows difficulty to be precisely titrated across trials.
 
-### 12.4 Why Luminance Equalization
+### 12.4 Why Three Color Versions
 
-In the original palette, luminance differences between colors can serve as a shortcut cue — participants may detect the oddball by brightness contrast alone, without processing hue or saturation. Setting all colors to the same L\* removes this confound.
-
-### 12.5 Why Chroma Boost
-
-Some materials (e.g., sandstone, bone, flint) have inherently low-saturation palettes where all colors cluster near the achromatic axis in CIELAB. After luminance equalization, these palettes can become nearly indistinguishable. Multiplying a\* and b\* by 1.5 expands the chromatic gamut, ensuring that meaningful color differences remain perceptible even under luminance equalization.
+The three color versions (original, lum_eq, chroma_boost_lum_eq) serve as a second difficulty dimension that targets different perceptual strategies. Original versions deliberately preserve lightness cues, making them easier and providing a performance baseline. Luminance-equalized versions force reliance on chromatic discrimination by setting all palette colors to the same L\*. Chroma-boosted versions rescue low-saturation materials (e.g., sandstone, bone, flint) whose colors cluster near the achromatic axis and would become nearly indistinguishable under luminance equalization alone. Because the experiment is designed to measure individual differences in color perception, including trials that span the full range from lightness-accessible to hue-only discrimination is essential.
 
 ## 13. Reproducibility
 
