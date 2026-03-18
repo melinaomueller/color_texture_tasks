@@ -61,25 +61,32 @@ def crops_too_close(new_x, new_y, existing, min_dist):
     return False
 
 
-def sample_crops(arr, n, rng, min_dist=200):
-    """Sample n valid, non-overlapping 200x200 crops from an RGB image.
+def sample_crops(arr, n, rng, min_dist=200, source_size=None):
+    """Sample n valid, non-overlapping crops from an RGB image.
+
+    Crops are extracted at source_size x source_size, then downscaled to
+    CROP_SIZE x CROP_SIZE using LANCZOS resampling.
 
     Args:
         arr: (H, W, 3) uint8 RGB image
         n: number of crops to sample
         rng: numpy RandomState
         min_dist: minimum distance between crop origins (200 = non-overlapping)
+        source_size: size of the region to crop from the source image
+                     (default: CROP_SIZE for backwards compatibility)
 
     Returns:
         list of (crop_array, x, y) tuples
     """
+    if source_size is None:
+        source_size = CROP_SIZE
     h, w = arr.shape[:2]
-    if h < CROP_SIZE or w < CROP_SIZE:
-        print(f"    Image too small ({w}x{h}), skipping.")
+    if h < source_size or w < source_size:
+        print(f"    Image too small ({w}x{h}) for {source_size}x{source_size} crops, skipping.")
         return []
 
-    x_hi = w - CROP_SIZE
-    y_hi = h - CROP_SIZE
+    x_hi = w - source_size
+    y_hi = h - source_size
     centers = []
     results = []
     attempts = 0
@@ -87,10 +94,14 @@ def sample_crops(arr, n, rng, min_dist=200):
     while len(results) < n and attempts < MAX_ATTEMPTS:
         x = rng.randint(0, x_hi + 1)
         y = rng.randint(0, y_hi + 1)
-        if (is_valid_crop(arr, x, y, CROP_SIZE, BLACK_THRESH, MIN_CONTENT)
+        if (is_valid_crop(arr, x, y, source_size, BLACK_THRESH, MIN_CONTENT)
                 and not crops_too_close(x, y, centers, min_dist)):
             centers.append((x, y))
-            results.append((arr[y:y + CROP_SIZE, x:x + CROP_SIZE].copy(), x, y))
+            crop = arr[y:y + source_size, x:x + source_size].copy()
+            if source_size != CROP_SIZE:
+                crop = np.array(Image.fromarray(crop).resize(
+                    (CROP_SIZE, CROP_SIZE), Image.LANCZOS))
+            results.append((crop, x, y))
         attempts += 1
 
     if len(results) < n:
@@ -145,6 +156,7 @@ def process_trial(row, output_dir, jspsych_dir):
     diff1_image = row["diff1_image"].strip()
     min_dist = int(row.get("min_dist") or CROP_SIZE)
     normalize = row.get("normalize", "").strip().lower() in ("true", "1", "yes")
+    crop_source_size = int(row.get("crop_source_size") or CROP_SIZE)
     notes = row.get("notes", "").strip()
 
     # Trial-specific RNG (matches color pipeline convention)
@@ -152,6 +164,7 @@ def process_trial(row, output_dir, jspsych_dir):
 
     print(f"  Trial {trial_id:02d}: {category}/{same3_image} vs "
           f"{diff1_category}/{diff1_image}"
+          f" (source crop {crop_source_size}x{crop_source_size})"
           f"{' [normalize]' if normalize else ''}"
           f"{f' ({notes})' if notes else ''} ... ", end="")
 
@@ -167,13 +180,15 @@ def process_trial(row, output_dir, jspsych_dir):
         return False
 
     # Sample 3 distractor crops from same3 image
-    distractor_results = sample_crops(same3_arr, 3, rng, min_dist=min_dist)
+    distractor_results = sample_crops(same3_arr, 3, rng, min_dist=min_dist,
+                                      source_size=crop_source_size)
     if len(distractor_results) < 3:
         print(f"SKIP (only got {len(distractor_results)}/3 distractor crops)")
         return False
 
     # Sample 1 oddball crop from diff1 image
-    oddball_results = sample_crops(diff1_arr, 1, rng, min_dist=0)
+    oddball_results = sample_crops(diff1_arr, 1, rng, min_dist=0,
+                                   source_size=crop_source_size)
     if len(oddball_results) < 1:
         print("SKIP (could not get oddball crop)")
         return False
@@ -207,6 +222,7 @@ def process_trial(row, output_dir, jspsych_dir):
         f"same3_source: {category}/{same3_image}",
         f"diff1_source: {diff1_category}/{diff1_image}",
         f"min_dist: {min_dist}",
+        f"crop_source_size: {crop_source_size}",
         f"normalize: {normalize}",
         f"notes: {notes}",
         "",

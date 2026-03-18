@@ -58,22 +58,28 @@ def crops_too_close(new_x, new_y, existing, min_dist):
     return False
 
 
-def sample_crops(arr, n, rng, min_dist=100):
+def sample_crops(arr, n, rng, min_dist=100, source_size=None):
+    if source_size is None:
+        source_size = CROP_SIZE
     h, w = arr.shape[:2]
-    if h < CROP_SIZE or w < CROP_SIZE:
-        print(f"    Image too small ({w}x{h}), skipping.")
+    if h < source_size or w < source_size:
+        print(f"    Image too small ({w}x{h}) for {source_size}x{source_size} crops, skipping.")
         return []
-    x_hi = w - CROP_SIZE
-    y_hi = h - CROP_SIZE
+    x_hi = w - source_size
+    y_hi = h - source_size
     centers, results = [], []
     attempts = 0
     while len(results) < n and attempts < MAX_ATTEMPTS:
         x = rng.randint(0, x_hi + 1)
         y = rng.randint(0, y_hi + 1)
-        if (is_valid_crop(arr, x, y, CROP_SIZE)
+        if (is_valid_crop(arr, x, y, source_size)
                 and not crops_too_close(x, y, centers, min_dist)):
             centers.append((x, y))
-            results.append((arr[y:y + CROP_SIZE, x:x + CROP_SIZE].copy(), x, y))
+            crop = arr[y:y + source_size, x:x + source_size].copy()
+            if source_size != CROP_SIZE:
+                crop = np.array(Image.fromarray(crop).resize(
+                    (CROP_SIZE, CROP_SIZE), Image.LANCZOS))
+            results.append((crop, x, y))
         attempts += 1
     if len(results) < n:
         print(f"    Got {len(results)}/{n} crops after {attempts} attempts.")
@@ -99,11 +105,13 @@ def process_trial(row, output_dir):
     diff1_category = row["diff1_category"].strip()
     diff1_image = row["diff1_image"].strip()
     notes = row.get("notes", "").strip()
+    crop_source_size = int(row.get("crop_source_size") or CROP_SIZE)
 
     rng = np.random.RandomState(RANDOM_SEED + trial_id)
 
     print(f"  Trial {trial_id:02d}: {category}/{same3_image} vs "
-          f"{diff1_category}/{diff1_image} ... ", end="")
+          f"{diff1_category}/{diff1_image}"
+          f" (source crop {crop_source_size}x{crop_source_size}) ... ", end="")
 
     same3_pil = load_stuff_image(category, same3_image)
     diff1_pil = load_stuff_image(diff1_category, diff1_image)
@@ -120,8 +128,10 @@ def process_trial(row, output_dir):
     os.makedirs(gallery_dir, exist_ok=True)
 
     # Sample candidate crops from both images
-    same3_crops = sample_crops(same3_arr, N_CANDIDATES, rng, min_dist=100)
-    diff1_crops = sample_crops(diff1_arr, N_CANDIDATES, rng, min_dist=100)
+    same3_crops = sample_crops(same3_arr, N_CANDIDATES, rng, min_dist=100,
+                               source_size=crop_source_size)
+    diff1_crops = sample_crops(diff1_arr, N_CANDIDATES, rng, min_dist=100,
+                               source_size=crop_source_size)
 
     # Save grayscale crops
     same3_info = []
@@ -151,6 +161,7 @@ def process_trial(row, output_dir):
         "diff1_category": diff1_category,
         "diff1_image": diff1_image,
         "notes": notes,
+        "crop_source_size": crop_source_size,
         "folder": f"trial_{trial_id:02d}_{category}",
         "same3_count": len(same3_crops),
         "diff1_count": len(diff1_crops),
@@ -172,6 +183,7 @@ def generate_html(trials, output_path):
         d1cat = html.escape(t["diff1_category"])
         d1 = html.escape(t["diff1_image"])
         notes = html.escape(t["notes"])
+        css = t.get("crop_source_size", CROP_SIZE)
         notes_html = f'<span class="notes">({notes})</span>' if notes else ""
 
         # Same3 crop grid
@@ -197,7 +209,8 @@ def generate_html(trials, output_path):
       <h2>Trial {tid}: {cat} {notes_html}</h2>
       <div class="source-info">
         Distractors from: <strong>{cat}/{s3}</strong> &nbsp;|&nbsp;
-        Oddball from: <strong>{d1cat}/{d1}</strong>
+        Oddball from: <strong>{d1cat}/{d1}</strong> &nbsp;|&nbsp;
+        Source crop: <strong>{css}&times;{css}</strong> &rarr; {CROP_SIZE}&times;{CROP_SIZE}
       </div>
       <div class="source-images">
         <div class="source-img">
