@@ -1,8 +1,0 @@
-Source: foliage/1156
-Trial 41: n_colors=4, difficulty=0.15
-
-  Color 1: RGB(211, 156, 103)  prop=0.2486
-  Color 2: RGB(120,  73,  48)  prop=0.2439
-  Color 3: RGB(166, 114,  77)  prop=0.2019
-  Color 4: RGB( 63,  41,  35)  prop=0.1823
-  Color 5: RGB(189, 113,  30)  prop=0.1234

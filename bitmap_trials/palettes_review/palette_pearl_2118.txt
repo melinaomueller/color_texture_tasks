@@ -1,8 +1,0 @@
-Source: pearl/2118
-Trial 27: n_colors=5, difficulty=0.20
-
-  Color 1: RGB(176, 164, 139)  prop=0.2858
-  Color 2: RGB(150, 134, 102)  prop=0.2586
-  Color 3: RGB(112,  93,  67)  prop=0.2260
-  Color 4: RGB( 54,  45,  35)  prop=0.1249
-  Color 5: RGB(199, 200, 197)  prop=0.1047

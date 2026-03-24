@@ -1,8 +1,0 @@
-Source: plastic/2241
-Trial 9: n_colors=3, difficulty=0.30
-
-  Color 1: RGB( 30,  40,  43)  prop=0.2504
-  Color 2: RGB(201, 200, 195)  prop=0.2421
-  Color 3: RGB(153, 137, 126)  prop=0.2124
-  Color 4: RGB( 35, 105, 135)  prop=0.1611
-  Color 5: RGB(163,  51,  25)  prop=0.1340

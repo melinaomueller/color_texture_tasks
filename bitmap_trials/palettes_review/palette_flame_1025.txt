@@ -1,8 +1,0 @@
-Source: flame/1025
-Trial 46: n_colors=3, difficulty=0.15
-
-  Color 1: RGB(233, 234, 218)  prop=0.2484
-  Color 2: RGB(208,  82,  30)  prop=0.2475
-  Color 3: RGB(238, 148,  53)  prop=0.1984
-  Color 4: RGB(238, 202, 107)  prop=0.1710
-  Color 5: RGB(140,  34,  21)  prop=0.1347

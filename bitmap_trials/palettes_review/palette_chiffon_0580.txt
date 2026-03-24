@@ -1,8 +1,0 @@
-Source: chiffon/0580
-Trial 10: n_colors=3, difficulty=0.30
-
-  Color 1: RGB( 54,   7,  16)  prop=0.3619
-  Color 2: RGB(122,  15,  21)  prop=0.2628
-  Color 3: RGB(120,  66,  90)  prop=0.1694
-  Color 4: RGB(186,  52,  31)  prop=0.1491
-  Color 5: RGB(218, 156, 156)  prop=0.0569

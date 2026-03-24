@@ -1,8 +1,0 @@
-Source: oilpaper/1955
-Trial 20: n_colors=4, difficulty=0.25
-
-  Color 1: RGB(189, 135,  87)  prop=0.2791
-  Color 2: RGB(213, 204, 186)  prop=0.2346
-  Color 3: RGB(204, 173, 136)  prop=0.2143
-  Color 4: RGB(156,  99,  55)  prop=0.2070
-  Color 5: RGB( 86,  43,  25)  prop=0.0650

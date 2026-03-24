@@ -1,8 +1,0 @@
-Source: opal/2008
-Trial 44: n_colors=4, difficulty=0.15
-
-  Color 1: RGB( 78,  64,  36)  prop=0.2863
-  Color 2: RGB(122,  97,  56)  prop=0.2130
-  Color 3: RGB( 38,  29,  21)  prop=0.2082
-  Color 4: RGB(110, 131, 166)  prop=0.1622
-  Color 5: RGB(170, 132,  72)  prop=0.1303

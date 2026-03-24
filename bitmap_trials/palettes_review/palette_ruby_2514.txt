@@ -1,8 +1,0 @@
-Source: ruby/2514
-Trial 57: n_colors=3, difficulty=0.10
-
-  Color 1: RGB(  3,   2,   4)  prop=0.5068
-  Color 2: RGB(118,  17,  39)  prop=0.1570
-  Color 3: RGB(230, 227, 222)  prop=0.1418
-  Color 4: RGB(189, 177, 164)  prop=0.1066
-  Color 5: RGB(130, 106,  95)  prop=0.0878

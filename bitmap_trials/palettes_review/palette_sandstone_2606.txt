@@ -1,8 +1,0 @@
-Source: sandstone/2606
-Trial 15: n_colors=5, difficulty=0.25
-
-  Color 1: RGB(194, 114,  85)  prop=0.2510
-  Color 2: RGB(171,  74,  37)  prop=0.2505
-  Color 3: RGB(136,  70,  61)  prop=0.2111
-  Color 4: RGB(100,  36,  20)  prop=0.1776
-  Color 5: RGB(228, 172, 149)  prop=0.1098

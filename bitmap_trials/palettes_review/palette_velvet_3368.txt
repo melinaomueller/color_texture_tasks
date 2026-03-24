@@ -1,8 +1,0 @@
-Source: velvet/3368
-Trial 60: n_colors=3, difficulty=0.10
-
-  Color 1: RGB( 74,  23,  23)  prop=0.2525
-  Color 2: RGB(105,  24,  23)  prop=0.2198
-  Color 3: RGB( 41,  24,  23)  prop=0.2054
-  Color 4: RGB(137,  25,  25)  prop=0.1879
-  Color 5: RGB(173,  28,  29)  prop=0.1344

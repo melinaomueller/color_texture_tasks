@@ -1,8 +1,0 @@
-Source: emerald/0939
-Trial 5: n_colors=4, difficulty=0.30
-
-  Color 1: RGB( 17,  48,  44)  prop=0.3829
-  Color 2: RGB( 40,  86,  71)  prop=0.2481
-  Color 3: RGB( 88, 131,  94)  prop=0.1876
-  Color 4: RGB(155, 156, 135)  prop=0.1078
-  Color 5: RGB(229, 214, 206)  prop=0.0736

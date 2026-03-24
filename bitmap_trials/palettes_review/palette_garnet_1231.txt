@@ -1,8 +1,0 @@
-Source: garnet/1231
-Trial 35: n_colors=3, difficulty=0.20
-
-  Color 1: RGB( 96,  60,  53)  prop=0.3370
-  Color 2: RGB(125,  83,  75)  prop=0.2613
-  Color 3: RGB( 65,  37,  32)  prop=0.1866
-  Color 4: RGB( 20,   7,   7)  prop=0.1682
-  Color 5: RGB(161, 129, 122)  prop=0.0469

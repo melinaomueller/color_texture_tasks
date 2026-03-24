@@ -1,8 +1,0 @@
-Source: quartzite/2383
-Trial 13: n_colors=5, difficulty=0.25
-
-  Color 1: RGB(184, 186, 184)  prop=0.3538
-  Color 2: RGB(184, 159, 108)  prop=0.2484
-  Color 3: RGB(151, 123,  74)  prop=0.1780
-  Color 4: RGB(224, 202, 150)  prop=0.1310
-  Color 5: RGB( 36,  26,  17)  prop=0.0888

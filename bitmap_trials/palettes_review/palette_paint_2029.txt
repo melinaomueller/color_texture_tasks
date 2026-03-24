@@ -1,8 +1,0 @@
-Source: paint/2029
-Trial 58: n_colors=3, difficulty=0.10
-
-  Color 1: RGB(107,  77,  31)  prop=0.2665
-  Color 2: RGB( 85, 179, 231)  prop=0.2391
-  Color 3: RGB( 18,  10,   7)  prop=0.2318
-  Color 4: RGB(239,  66,  15)  prop=0.2121
-  Color 5: RGB(241, 228,  21)  prop=0.0505

@@ -1,8 +1,0 @@
-Source: gelatin/1275
-Trial 22: n_colors=3, difficulty=0.25
-
-  Color 1: RGB( 42,   6,   5)  prop=0.2968
-  Color 2: RGB(111,  40,  23)  prop=0.2223
-  Color 3: RGB(164, 112,  40)  prop=0.2078
-  Color 4: RGB(219, 191,  30)  prop=0.1810
-  Color 5: RGB(211, 202, 164)  prop=0.0922

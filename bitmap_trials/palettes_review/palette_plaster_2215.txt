@@ -1,8 +1,0 @@
-Source: plaster/2215
-Trial 30: n_colors=4, difficulty=0.20
-
-  Color 1: RGB(194,  30,  46)  prop=0.2600
-  Color 2: RGB(218,  59,  73)  prop=0.2441
-  Color 3: RGB(162,   7,  21)  prop=0.1906
-  Color 4: RGB(240,  93, 105)  prop=0.1834
-  Color 5: RGB(253, 137, 146)  prop=0.1219

@@ -1,8 +1,0 @@
-Source: sponge/2924
-Trial 50: n_colors=5, difficulty=0.10
-
-  Color 1: RGB(223, 222, 215)  prop=0.5423
-  Color 2: RGB(209, 175,   7)  prop=0.3090
-  Color 3: RGB( 35, 116,  33)  prop=0.0811
-  Color 4: RGB( 11,  62,   8)  prop=0.0413
-  Color 5: RGB(205, 201, 150)  prop=0.0262

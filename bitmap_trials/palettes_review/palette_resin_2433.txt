@@ -1,8 +1,0 @@
-Source: resin/2433
-Trial 23: n_colors=3, difficulty=0.25
-
-  Color 1: RGB( 85,  64,  16)  prop=0.4267
-  Color 2: RGB( 29,  22,  19)  prop=0.1999
-  Color 3: RGB(144, 103,   8)  prop=0.1474
-  Color 4: RGB(201, 142,  37)  prop=0.1458
-  Color 5: RGB(133, 107,  88)  prop=0.0803

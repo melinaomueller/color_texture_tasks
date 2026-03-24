@@ -1,8 +1,0 @@
-Source: moonstone/1802
-Trial 47: n_colors=3, difficulty=0.15
-
-  Color 1: RGB(135, 126, 130)  prop=0.5172
-  Color 2: RGB( 87,  85, 109)  prop=0.2636
-  Color 3: RGB(175, 167, 165)  prop=0.1047
-  Color 4: RGB( 74, 118, 170)  prop=0.0812
-  Color 5: RGB( 50,  30,  23)  prop=0.0333

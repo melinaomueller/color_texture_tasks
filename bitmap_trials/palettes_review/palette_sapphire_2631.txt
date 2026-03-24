@@ -1,8 +1,0 @@
-Source: sapphire/2631
-Trial 21: n_colors=3, difficulty=0.25
-
-  Color 1: RGB( 38,  17, 147)  prop=0.3205
-  Color 2: RGB( 62,  36, 207)  prop=0.2373
-  Color 3: RGB( 28,  21,  77)  prop=0.1998
-  Color 4: RGB(181, 198, 248)  prop=0.1228
-  Color 5: RGB(111, 117, 224)  prop=0.1196

@@ -1,8 +1,0 @@
-Source: tin/3134
-Trial 29: n_colors=4, difficulty=0.20
-
-  Color 1: RGB( 50,  69,  58)  prop=0.4105
-  Color 2: RGB( 91, 105,  82)  prop=0.2641
-  Color 3: RGB(141, 147, 142)  prop=0.2043
-  Color 4: RGB(182, 193, 193)  prop=0.0696
-  Color 5: RGB(154,  70,  33)  prop=0.0514

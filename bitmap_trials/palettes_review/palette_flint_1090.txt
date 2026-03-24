@@ -1,8 +1,0 @@
-Source: flint/1090
-Trial 55: n_colors=4, difficulty=0.10
-
-  Color 1: RGB(185, 142, 133)  prop=0.2501
-  Color 2: RGB(162,  99,  89)  prop=0.2486
-  Color 3: RGB(197, 188, 191)  prop=0.2414
-  Color 4: RGB(103,  72,  65)  prop=0.1844
-  Color 5: RGB( 39,  29,  28)  prop=0.0755

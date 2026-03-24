@@ -1,8 +1,0 @@
-Source: onyx/1997
-Trial 17: n_colors=4, difficulty=0.25
-
-  Color 1: RGB(121, 117, 114)  prop=0.4139
-  Color 2: RGB(101,  87,  80)  prop=0.2646
-  Color 3: RGB( 71,  50,  44)  prop=0.1392
-  Color 4: RGB(172,  83,  31)  prop=0.1037
-  Color 5: RGB(207, 179, 148)  prop=0.0786

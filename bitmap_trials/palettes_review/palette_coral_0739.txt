@@ -1,8 +1,0 @@
-Source: coral/0739
-Trial 48: n_colors=3, difficulty=0.15
-
-  Color 1: RGB(220,   0,   1)  prop=0.5324
-  Color 2: RGB(232, 224, 226)  prop=0.1731
-  Color 3: RGB(206, 186, 189)  prop=0.1410
-  Color 4: RGB(173,   2,   3)  prop=0.0965
-  Color 5: RGB(176, 140, 128)  prop=0.0569

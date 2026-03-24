@@ -1,8 +1,0 @@
-Source: pottery/2342
-Trial 33: n_colors=3, difficulty=0.20
-
-  Color 1: RGB(166, 135, 118)  prop=0.3829
-  Color 2: RGB( 48,  34,  33)  prop=0.2180
-  Color 3: RGB(227, 204, 197)  prop=0.1667
-  Color 4: RGB(220, 144, 106)  prop=0.1320
-  Color 5: RGB(113,  65,  57)  prop=0.1004
