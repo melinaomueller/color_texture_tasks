@@ -1,0 +1,13 @@
+trial_id: 13
+category: ember
+same3_source: ember/0930
+diff1_source: ember/0932
+min_dist: 200
+normalize: False
+notes: 
+
+distractor crops (x, y):
+  distractor_1: (461, 666)
+  distractor_2: (295, 893)
+  distractor_3: (37, 347)
+  oddball: (673, 2102)

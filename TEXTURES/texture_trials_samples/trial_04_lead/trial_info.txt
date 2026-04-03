@@ -1,0 +1,13 @@
+trial_id: 4
+category: lead
+same3_source: lead/1626
+diff1_source: lead/1627
+min_dist: 200
+normalize: False
+notes: 
+
+distractor crops (x, y):
+  distractor_1: (189, 325)
+  distractor_2: (442, 403)
+  distractor_3: (130, 72)
+  oddball: (544, 799)

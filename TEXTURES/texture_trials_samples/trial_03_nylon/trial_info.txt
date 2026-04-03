@@ -1,0 +1,13 @@
+trial_id: 3
+category: nylon
+same3_source: nylon/1882
+diff1_source: nylon/1880
+min_dist: 200
+normalize: False
+notes: 
+
+distractor crops (x, y):
+  distractor_1: (459, 414)
+  distractor_2: (131, 380)
+  distractor_3: (32, 95)
+  oddball: (163, 580)

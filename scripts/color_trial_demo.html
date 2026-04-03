@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Color Oddball Trial Demo</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #111827;
+  color: #d1d5db;
+  min-height: 100vh;
+  font-size: 14px;
+}
+
+/* ── Header ── */
+#header {
+  background: #1f2937;
+  border-bottom: 1px solid #374151;
+  padding: 14px 28px;
+}
+#header h1 { font-size: 1.15em; font-weight: 700; color: #f9fafb; }
+#header p  { font-size: 0.78em; color: #9ca3af; margin-top: 3px; }
+
+/* ── Controls ── */
+#controls {
+  background: #1f2937;
+  border-bottom: 2px solid #374151;
+  padding: 12px 28px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  align-items: flex-end;
+}
+.ctrl-group { display: flex; flex-direction: column; gap: 4px; }
+.ctrl-label {
+  font-size: 0.68em;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  font-weight: 700;
+  color: #6b7280;
+}
+.btn-row { display: flex; gap: 2px; }
+
+select, button {
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 0.82em;
+  border: 1px solid #374151;
+  background: #111827;
+  color: #9ca3af;
+  padding: 5px 11px;
+  transition: background 0.12s, color 0.12s, border-color 0.12s;
+}
+select:hover, button:hover { background: #1f2937; color: #e5e7eb; }
+button.active {
+  background: #1d4ed8;
+  border-color: #3b82f6;
+  color: #eff6ff;
+  font-weight: 700;
+}
+#toggle-labels {
+  background: #374151;
+  border-color: #4b5563;
+  color: #d1d5db;
+  font-size: 0.78em;
+  padding: 5px 12px;
+}
+
+/* ── Main layout ── */
+#main {
+  padding: 20px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+/* ── Method cards ── */
+.mcard {
+  background: #1f2937;
+  border: 1px solid #374151;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.mcard-head {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 11px 18px;
+  background: #283548;
+  border-bottom: 1px solid #374151;
+}
+.mbadge {
+  font-size: 0.65em;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  padding: 3px 8px;
+  border-radius: 3px;
+}
+.mbadge-1 { background: #1d4ed8; color: #eff6ff; }
+.mbadge-2 { background: #065f46; color: #ecfdf5; }
+.mtitle { font-size: 0.97em; font-weight: 700; color: #f3f4f6; }
+.mdesc  { font-size: 0.76em; color: #6b7280; }
+
+.mcard-body {
+  display: flex;
+  gap: 24px;
+  padding: 18px;
+  align-items: flex-start;
+}
+
+/* ── Palette panel (left column) ── */
+.pal-panel {
+  flex: 0 0 210px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.pal-block { display: flex; flex-direction: column; gap: 4px; }
+.pal-name {
+  font-size: 0.68em;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  font-weight: 700;
+  color: #6b7280;
+}
+canvas.strip {
+  width: 210px;
+  height: 22px;
+  border-radius: 2px;
+  image-rendering: pixelated;
+  display: block;
+}
+canvas.chart {
+  width: 210px;
+  height: 80px;
+  border-radius: 3px;
+  display: block;
+  image-rendering: pixelated;
+}
+.chart-note {
+  font-size: 0.68em;
+  color: #6b7280;
+  margin-top: 2px;
+}
+
+/* ── Trial grid ── */
+.trial-area { flex: 1; }
+.trial-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.trial-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+canvas.bmp {
+  width: 200px;
+  height: 200px;
+  image-rendering: pixelated;
+  border: 2px solid transparent;
+  border-radius: 3px;
+  display: block;
+}
+canvas.bmp.is-odd { border-color: #ef4444; }
+.trial-label {
+  font-size: 0.68em;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.label-odd  { color: #ef4444; }
+.label-dist { color: #4b5563; }
+
+/* ── Info bar ── */
+.mcard-info {
+  font-size: 0.7em;
+  color: #4b5563;
+  padding: 7px 18px 10px;
+  border-top: 1px solid #1f2937;
+}
+
+/* ── Trial position note ── */
+.trial-note {
+  font-size: 0.68em;
+  color: #4b5563;
+  margin-top: 6px;
+}
+</style>
+</head>
+<body>
+
+<div id="header">
+  <h1>Color Oddball Trial Demo</h1>
+  <p>Two methods for generating hue-oddball bitmap trials. Anchors selected from Witzel &amp; Gegenfurtner (2013) focal color hue angles in CIELAB (C = 75).</p>
+</div>
+
+<div id="controls">
+  <div class="ctrl-group">
+    <span class="ctrl-label">Base Color</span>
+    <select id="sel-color">
+      <option value="blue">Blue (246°)</option>
+      <option value="teal">Teal (195°)</option>
+      <option value="green">Green (162°)</option>
+      <option value="yellow">Yellow (90°)</option>
+      <option value="orange">Orange (47°)</option>
+      <option value="red">Red (24°)</option>
+      <option value="pink">Pink (335°)</option>
+      <option value="purple">Purple (295°)</option>
+    </select>
+  </div>
+
+  <div class="ctrl-group">
+    <span class="ctrl-label">Grid</span>
+    <div class="btn-row" id="bg-grid">
+      <button data-val="12" class="active">12 × 12</button>
+      <button data-val="20">20 × 20</button>
+    </div>
+  </div>
+
+  <div class="ctrl-group">
+    <span class="ctrl-label">N Colors in Palette</span>
+    <div class="btn-row" id="bg-n">
+      <button data-val="5">5</button>
+      <button data-val="10" class="active">10</button>
+      <button data-val="15">15</button>
+      <button data-val="20">20</button>
+      <button data-val="30">30</button>
+    </div>
+  </div>
+
+  <div class="ctrl-group">
+    <span class="ctrl-label">Hue Separation (ΔE)</span>
+    <div class="btn-row" id="bg-de">
+      <button data-val="1">1</button>
+      <button data-val="1.5">1.5</button>
+      <button data-val="3" class="active">3</button>
+      <button data-val="6">6</button>
+      <button data-val="10">10</button>
+      <button data-val="12">12</button>
+    </div>
+  </div>
+
+  <div class="ctrl-group">
+    <span class="ctrl-label">Lightness</span>
+    <div class="btn-row" id="bg-L">
+      <button data-val="60">L = 60</button>
+      <button data-val="70" class="active">L = 70</button>
+      <button data-val="80">L = 80</button>
+    </div>
+  </div>
+
+  <div class="ctrl-group">
+    <span class="ctrl-label">Labels</span>
+    <button id="toggle-labels">Hide labels</button>
+  </div>
+</div>
+
+<div id="main">
+
+  <!-- ── Method 1 card ── -->
+  <div class="mcard">
+    <div class="mcard-head">
+      <span class="mbadge mbadge-1">Method 1</span>
+      <span class="mtitle">Hue Shift</span>
+      <span class="mdesc">Distractor and oddball drawn from two separate palettes at different hue angles — genuinely different colors</span>
+    </div>
+    <div class="mcard-body">
+      <div class="pal-panel">
+        <div class="pal-block">
+          <span class="pal-name">Distractor palette</span>
+          <canvas class="strip" id="m1-pd" width="420" height="44"></canvas>
+        </div>
+        <div class="pal-block">
+          <span class="pal-name">Oddball palette (rotated)</span>
+          <canvas class="strip" id="m1-po" width="420" height="44"></canvas>
+        </div>
+        <div class="pal-block">
+          <span class="pal-name">Color proportions</span>
+          <canvas class="chart" id="m1-dc" width="420" height="160"></canvas>
+          <div class="chart-note" id="m1-cn">All colors used in equal proportions</div>
+        </div>
+      </div>
+      <div class="trial-area">
+        <div class="trial-grid">
+          <div class="trial-cell">
+            <canvas class="bmp is-odd" id="m1-b0"></canvas>
+            <span class="trial-label label-odd" id="m1-l0">★ Oddball</span>
+          </div>
+          <div class="trial-cell">
+            <canvas class="bmp" id="m1-b1"></canvas>
+            <span class="trial-label label-dist" id="m1-l1">Distractor</span>
+          </div>
+          <div class="trial-cell">
+            <canvas class="bmp" id="m1-b2"></canvas>
+            <span class="trial-label label-dist" id="m1-l2">Distractor</span>
+          </div>
+          <div class="trial-cell">
+            <canvas class="bmp" id="m1-b3"></canvas>
+            <span class="trial-label label-dist" id="m1-l3">Distractor</span>
+          </div>
+        </div>
+        <div class="trial-note">Oddball always top-left for comparison clarity; position is randomized in actual trials.</div>
+      </div>
+    </div>
+    <div class="mcard-info" id="m1-info"></div>
+  </div>
+
+  <!-- ── Method 2 card ── -->
+  <div class="mcard">
+    <div class="mcard-head">
+      <span class="mbadge mbadge-2">Method 2</span>
+      <span class="mtitle">Mean Represented Color Shift</span>
+      <span class="mdesc">All bitmaps use the same shared palette — the oddball differs only in which colors are represented more</span>
+    </div>
+    <div class="mcard-body">
+      <div class="pal-panel">
+        <div class="pal-block">
+          <span class="pal-name">Shared palette (all bitmaps)</span>
+          <canvas class="strip" id="m2-ps" width="420" height="44"></canvas>
+        </div>
+        <div class="pal-block">
+          <span class="pal-name">Color distributions</span>
+          <canvas class="chart" id="m2-dc" width="420" height="160"></canvas>
+          <div class="chart-note" id="m2-cn"></div>
+        </div>
+      </div>
+      <div class="trial-area">
+        <div class="trial-grid">
+          <div class="trial-cell">
+            <canvas class="bmp is-odd" id="m2-b0"></canvas>
+            <span class="trial-label label-odd" id="m2-l0">★ Oddball</span>
+          </div>
+          <div class="trial-cell">
+            <canvas class="bmp" id="m2-b1"></canvas>
+            <span class="trial-label label-dist" id="m2-l1">Distractor</span>
+          </div>
+          <div class="trial-cell">
+            <canvas class="bmp" id="m2-b2"></canvas>
+            <span class="trial-label label-dist" id="m2-l2">Distractor</span>
+          </div>
+          <div class="trial-cell">
+            <canvas class="bmp" id="m2-b3"></canvas>
+            <span class="trial-label label-dist" id="m2-l3">Distractor</span>
+          </div>
+        </div>
+        <div class="trial-note">Oddball always top-left for comparison clarity; position is randomized in actual trials.</div>
+      </div>
+    </div>
+    <div class="mcard-info" id="m2-info"></div>
+  </div>
+
+</div><!-- /#main -->
+
+<script>
+// ═══════════════════════════════════════════════════════
+//  Color math
+// ═══════════════════════════════════════════════════════
+
+function lab2rgb(L, a, b) {
+  // CIELAB → XYZ (D65 illuminant)
+  const fy = (L + 16) / 116;
+  const fx = a / 500 + fy;
+  const fz = fy - b / 200;
+  const d  = 6 / 29;
+  const f  = t => t > d ? t * t * t : 3 * d * d * (t - 4 / 29);
+  const X  = 0.95047 * f(fx);
+  const Y  = 1.00000 * f(fy);
+  const Z  = 1.08883 * f(fz);
+
+  // XYZ → linear sRGB
+  let r  =  3.2406 * X - 1.5372 * Y - 0.4986 * Z;
+  let g  = -0.9689 * X + 1.8758 * Y + 0.0415 * Z;
+  let bl =  0.0557 * X - 0.2040 * Y + 1.0570 * Z;
+
+  // Gamma + clip
+  const gam  = v => v <= 0.0031308 ? 12.92 * v : 1.055 * Math.pow(Math.max(v, 0), 1 / 2.4) - 0.055;
+  const clip = v => Math.min(255, Math.max(0, Math.round(v * 255)));
+  return [clip(gam(r)), clip(gam(g)), clip(gam(bl))];
+}
+
+// ═══════════════════════════════════════════════════════
+//  Seeded PRNG — Mulberry32
+// ═══════════════════════════════════════════════════════
+
+function makeRng(seed) {
+  let s = (seed >>> 0) || 1;
+  return () => {
+    s += 0x6D2B79F5;
+    let t = Math.imul(s ^ (s >>> 15), s | 1);
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+// ═══════════════════════════════════════════════════════
+//  Color anchors — Witzel & Gegenfurtner (2013) focal
+//  hue angles mapped to CIELAB at chroma C = 75.
+//
+//  Unique hues from W&G: blue ≈ 246°, green ≈ 162°,
+//  yellow ≈ 90°, red ≈ 24°.  Orange, pink, purple
+//  placed at perceptually consistent intermediate angles
+//  consistent with their broader category work.
+// ═══════════════════════════════════════════════════════
+
+const CHROMA = 75;
+
+const ANCHORS = {
+  blue:   { label: 'Blue',   hue: 246 },
+  teal:   { label: 'Teal',   hue: 195 },
+  green:  { label: 'Green',  hue: 162 },
+  yellow: { label: 'Yellow', hue:  90 },
+  orange: { label: 'Orange', hue:  47 },
+  red:    { label: 'Red',    hue:  24 },
+  pink:   { label: 'Pink',   hue: 335 },
+  purple: { label: 'Purple', hue: 295 },
+};
+
+// Pre-compute a*, b* for each anchor
+for (const k of Object.keys(ANCHORS)) {
+  const rad = ANCHORS[k].hue * Math.PI / 180;
+  ANCHORS[k].a = CHROMA * Math.cos(rad);
+  ANCHORS[k].b = CHROMA * Math.sin(rad);
+}
+
+// ═══════════════════════════════════════════════════════
+//  Palette & distribution utilities
+// ═══════════════════════════════════════════════════════
+
+const PALETTE_DE = 2.0; // fixed within-palette ΔE step (not exposed as control)
+
+// Generate n palette colors stepping tangentially around (a*, b*)
+function makePalette(L, a, b, n) {
+  const C  = Math.sqrt(a * a + b * b);
+  const ta = -b / C; // tangential direction in a*-b* plane
+  const tb =  a / C;
+  return Array.from({ length: n }, (_, i) => {
+    const off = i - (n - 1) / 2;
+    const na  = a + off * PALETTE_DE * ta;
+    const nb  = b + off * PALETTE_DE * tb;
+    return { rgb: lab2rgb(L, na, nb) };
+  });
+}
+
+// Rotate (a*, b*) on the hue circle by de ΔE (chord formula)
+function rotateAB(a, b, de) {
+  const C     = Math.sqrt(a * a + b * b);
+  const angle = 2 * Math.asin(Math.min(de / (2 * C), 1.0));
+  const h     = Math.atan2(b, a) + angle;
+  return [C * Math.cos(h), C * Math.sin(h)];
+}
+
+// Platykurtic proportions: uniform floor + Gaussian peak
+function platykurticProps(n, meanIdx, sigma) {
+  const raw = Array.from({ length: n }, (_, i) =>
+    0.5 / n + 0.5 * Math.exp(-0.5 * ((i - meanIdx) / sigma) ** 2));
+  const sum = raw.reduce((a, b) => a + b, 0);
+  return raw.map(v => v / sum);
+}
+
+// ═══════════════════════════════════════════════════════
+//  Canvas renderers
+// ═══════════════════════════════════════════════════════
+
+// Palette strip: horizontal row of color swatches
+function renderStrip(cvs, colors) {
+  const W = cvs.width, H = cvs.height;
+  const ctx = cvs.getContext('2d');
+  const sw  = W / colors.length;
+  colors.forEach((c, i) => {
+    const [r, g, b] = c.rgb;
+    ctx.fillStyle = `rgb(${r},${g},${b})`;
+    ctx.fillRect(Math.floor(i * sw), 0, Math.ceil(sw) + 1, H);
+  });
+}
+
+// Method 1 chart: two side-by-side equal-proportion palettes
+// Left = distractor colors,  Right = oddball colors
+function renderM1Chart(cvs, distColors, oddColors) {
+  const W = cvs.width, H = cvs.height;
+  const ctx = cvs.getContext('2d');
+  ctx.clearRect(0, 0, W, H);
+  ctx.fillStyle = '#0d1525';
+  ctx.fillRect(0, 0, W, H);
+
+  const lbl   = 18;           // space for label text
+  const barH  = H - lbl - 4; // height of bars
+  const divX  = (W - 2) / 2; // x of divider
+
+  const nd = distColors.length;
+  const no = oddColors.length;
+
+  // Distractor palette bars (equal height)
+  const wDist = divX / nd;
+  distColors.forEach((c, i) => {
+    const [r, g, b] = c.rgb;
+    ctx.fillStyle = `rgb(${r},${g},${b})`;
+    ctx.fillRect(Math.floor(i * wDist), lbl, Math.ceil(wDist), barH);
+  });
+
+  // Divider
+  ctx.fillStyle = '#1e3a5f';
+  ctx.fillRect(divX, 0, 2, H);
+
+  // Oddball palette bars (equal height)
+  const x0   = divX + 2;
+  const wOdd = (W - x0) / no;
+  oddColors.forEach((c, i) => {
+    const [r, g, b] = c.rgb;
+    ctx.fillStyle = `rgb(${r},${g},${b})`;
+    ctx.fillRect(Math.floor(x0 + i * wOdd), lbl, Math.ceil(wOdd), barH);
+  });
+
+  // Labels
+  ctx.font = '11px sans-serif';
+  ctx.fillStyle = '#6b7280';
+  ctx.fillText('distractors — equal proportions', 3, 13);
+  ctx.fillText('oddball — equal proportions', x0 + 3, 13);
+}
+
+// Method 2 chart: overlapping distributions over shared palette
+// Muted wide bars = distractor proportions
+// Vivid narrow bars = oddball proportions
+function renderM2Chart(cvs, colors, distProps, oddProps) {
+  const W = cvs.width, H = cvs.height;
+  const ctx = cvs.getContext('2d');
+  ctx.clearRect(0, 0, W, H);
+  ctx.fillStyle = '#0d1525';
+  ctx.fillRect(0, 0, W, H);
+
+  const lbl    = 18;
+  const chartH = H - lbl - 2;
+  const n      = colors.length;
+  const barW   = W / n;
+  const maxP   = Math.max(...distProps, ...oddProps);
+
+  // Distractor: wide bar at reduced opacity
+  distProps.forEach((p, i) => {
+    const [r, g, b] = colors[i].rgb;
+    const bh = (p / maxP) * chartH;
+    ctx.fillStyle = `rgba(${r},${g},${b},0.35)`;
+    ctx.fillRect(Math.floor(i * barW), H - bh, Math.ceil(barW), bh);
+  });
+
+  // Oddball: narrower vivid bar, centered within each slot
+  const oddFrac = 0.52;
+  const oddOff  = (barW * (1 - oddFrac)) / 2;
+  oddProps.forEach((p, i) => {
+    const [r, g, b] = colors[i].rgb;
+    const bh = (p / maxP) * chartH;
+    ctx.fillStyle = `rgba(${r},${g},${b},1.0)`;
+    ctx.fillRect(Math.floor(i * barW + oddOff), H - bh, Math.ceil(barW * oddFrac), bh);
+  });
+
+  // Legend
+  ctx.font = '11px sans-serif';
+  ctx.fillStyle = '#6b7280';
+  ctx.fillText('■ distractor (muted)', 3, 13);
+  ctx.fillStyle = '#d1d5db';
+  ctx.fillText('▐ oddball (vivid)', W - 115, 13);
+}
+
+// Bitmap: gridN × gridN tiles, colors sampled by proportions
+function renderBitmap(cvs, colors, props, gridN, seed) {
+  const cellPx = Math.floor(200 / gridN);
+  const sz     = cellPx * gridN;
+  cvs.width    = sz;
+  cvs.height   = sz;
+
+  const total  = gridN * gridN;
+  const counts = props.map(p => Math.round(p * total));
+  // Correct rounding drift on first element
+  counts[0] += total - counts.reduce((a, b) => a + b, 0);
+
+  // Build flat cell list
+  const cells = [];
+  counts.forEach((c, i) => { for (let j = 0; j < c; j++) cells.push(i); });
+
+  // Shuffle with seeded PRNG
+  const rng = makeRng(seed);
+  for (let i = cells.length - 1; i > 0; i--) {
+    const j = Math.floor(rng() * (i + 1));
+    [cells[i], cells[j]] = [cells[j], cells[i]];
+  }
+
+  // Draw tiles
+  const ctx = cvs.getContext('2d');
+  cells.forEach((ci, idx) => {
+    const row = Math.floor(idx / gridN);
+    const col = idx % gridN;
+    const [r, g, b] = colors[ci].rgb;
+    ctx.fillStyle = `rgb(${r},${g},${b})`;
+    ctx.fillRect(col * cellPx, row * cellPx, cellPx, cellPx);
+  });
+}
+
+// ═══════════════════════════════════════════════════════
+//  State
+// ═══════════════════════════════════════════════════════
+
+const state = {
+  color:  'blue',
+  grid:   12,
+  n:      10,
+  de:     3,
+  L:      70,
+  labels: true,
+};
+
+// ═══════════════════════════════════════════════════════
+//  Main render
+// ═══════════════════════════════════════════════════════
+
+function render() {
+  const { color, grid, n, de, L, labels } = state;
+  const anc  = ANCHORS[color];
+  const N    = +n;
+  const GRID = +grid;
+  const DE   = +de;
+
+  // ── Method 1 ──────────────────────────────────────────
+  const distPal  = makePalette(L, anc.a, anc.b, N);
+  const [ao, bo] = rotateAB(anc.a, anc.b, DE);
+  const oddPal   = makePalette(L, ao, bo, N);
+  const eqProps  = Array(N).fill(1 / N);
+
+  renderStrip(document.getElementById('m1-pd'), distPal);
+  renderStrip(document.getElementById('m1-po'), oddPal);
+  renderM1Chart(document.getElementById('m1-dc'), distPal, oddPal);
+
+  const m1seeds = [42, 101, 202, 303];
+  renderBitmap(document.getElementById('m1-b0'), oddPal,  eqProps, GRID, m1seeds[0]);
+  renderBitmap(document.getElementById('m1-b1'), distPal, eqProps, GRID, m1seeds[1]);
+  renderBitmap(document.getElementById('m1-b2'), distPal, eqProps, GRID, m1seeds[2]);
+  renderBitmap(document.getElementById('m1-b3'), distPal, eqProps, GRID, m1seeds[3]);
+
+  document.getElementById('m1-info').textContent =
+    `${anc.label} · L = ${L} · ${N} colors · hue shift ΔE = ${DE} · grid ${GRID}×${GRID}`
+    + `  |  palette step = ${PALETTE_DE} ΔE (fixed)`;
+
+  // ── Method 2 ──────────────────────────────────────────
+  const sharedPal = makePalette(L, anc.a, anc.b, N);
+  const midpt     = (N - 1) / 2.0;
+  const sigma     = Math.max(1.5, N / 4);
+
+  // Shift in palette steps; cap to avoid pushing peak entirely off the palette
+  const rawShift = Math.max(1, Math.round(DE / PALETTE_DE));
+  const maxShift = Math.max(1, Math.floor(N * 0.40));
+  const shift    = Math.min(maxShift, rawShift);
+  const capped   = shift < rawShift;
+  const effDE    = (shift * PALETTE_DE).toFixed(1);
+
+  const distProps = platykurticProps(N, midpt,         sigma);
+  const oddProps  = platykurticProps(N, midpt + shift, sigma);
+
+  renderStrip(document.getElementById('m2-ps'), sharedPal);
+  renderM2Chart(document.getElementById('m2-dc'), sharedPal, distProps, oddProps);
+
+  const m2seeds = [42, 101, 202, 303];
+  renderBitmap(document.getElementById('m2-b0'), sharedPal, oddProps,  GRID, m2seeds[0]);
+  renderBitmap(document.getElementById('m2-b1'), sharedPal, distProps, GRID, m2seeds[1]);
+  renderBitmap(document.getElementById('m2-b2'), sharedPal, distProps, GRID, m2seeds[2]);
+  renderBitmap(document.getElementById('m2-b3'), sharedPal, distProps, GRID, m2seeds[3]);
+
+  document.getElementById('m2-cn').textContent =
+    `Peak shift: ${shift} steps ≈ ΔE ${effDE} in mean color${capped ? ' (capped to stay within palette)' : ''}  ·  σ = ${sigma.toFixed(1)} steps`;
+
+  document.getElementById('m2-info').textContent =
+    `${anc.label} · L = ${L} · ${N} colors · peak shift ${shift} steps (≈ ΔE ${effDE})${capped ? ' — capped' : ''} · σ = ${sigma.toFixed(1)} · grid ${GRID}×${GRID}`
+    + `  |  palette step = ${PALETTE_DE} ΔE (fixed)`;
+
+  // ── Label visibility ───────────────────────────────────
+  const vis = labels ? 'visible' : 'hidden';
+  document.querySelectorAll('.trial-label').forEach(el => {
+    el.style.visibility = vis;
+  });
+}
+
+// ═══════════════════════════════════════════════════════
+//  UI wiring
+// ═══════════════════════════════════════════════════════
+
+document.getElementById('sel-color').addEventListener('change', e => {
+  state.color = e.target.value;
+  render();
+});
+
+function wireBtnGroup(id, key) {
+  const grp = document.getElementById(id);
+  grp.querySelectorAll('button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      grp.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      state[key] = +btn.dataset.val;
+      render();
+    });
+  });
+}
+
+wireBtnGroup('bg-grid', 'grid');
+wireBtnGroup('bg-n',    'n');
+wireBtnGroup('bg-de',   'de');
+wireBtnGroup('bg-L',    'L');
+
+document.getElementById('toggle-labels').addEventListener('click', function () {
+  state.labels = !state.labels;
+  this.textContent = state.labels ? 'Hide labels' : 'Show labels';
+  render();
+});
+
+// Initial render
+render();
+</script>
+</body>
+</html>

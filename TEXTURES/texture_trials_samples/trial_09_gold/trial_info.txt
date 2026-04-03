@@ -1,0 +1,13 @@
+trial_id: 9
+category: gold
+same3_source: gold/1321
+diff1_source: gold/1322
+min_dist: 200
+normalize: False
+notes: 
+
+distractor crops (x, y):
+  distractor_1: (57, 485)
+  distractor_2: (528, 436)
+  distractor_3: (572, 28)
+  oddball: (340, 164)
