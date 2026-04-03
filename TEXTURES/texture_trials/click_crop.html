@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Click-to-Crop Tool</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #f5f5f5; color: #333;
+      padding: 20px 40px; max-width: 1900px; margin: 0 auto;
+    }
+    h1 { text-align: center; margin-bottom: 6px; font-size: 24px; }
+    .page-info {
+      text-align: center; color: #666; margin-bottom: 8px; font-size: 14px;
+    }
+    .nav-bar {
+      text-align: center; margin-bottom: 20px; padding: 10px;
+      background: #fff; border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      position: sticky; top: 0; z-index: 100;
+    }
+    .nav-bar a {
+      margin: 0 6px; text-decoration: none; color: #1565c0; font-size: 14px;
+    }
+    .nav-bar a:hover { text-decoration: underline; }
+    .nav-bar a.complete { color: #2e7d32; font-weight: 600; }
+
+    .trial-block {
+      background: #fff; border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+      padding: 24px; margin-bottom: 30px;
+    }
+    .trial-block h2 {
+      font-size: 18px; margin-bottom: 6px;
+      border-bottom: 2px solid #e0e0e0; padding-bottom: 6px;
+    }
+    .notes { color: #e65100; font-weight: normal; font-size: 14px; }
+    .source-info { font-size: 13px; color: #666; margin-bottom: 12px; }
+
+    .image-panels {
+      display: flex; gap: 30px; margin-bottom: 16px; flex-wrap: wrap;
+    }
+    .image-panel {
+      flex: 1; min-width: 400px;
+    }
+    .image-panel h3 {
+      font-size: 14px; margin-bottom: 8px; color: #444;
+    }
+    .count-badge {
+      display: inline-block; padding: 2px 8px; border-radius: 10px;
+      font-size: 12px; font-weight: 600; background: #e0e0e0; color: #555;
+    }
+    .count-badge.complete { background: #c8e6c9; color: #2e7d32; }
+
+    .source-container {
+      position: relative; display: inline-block; cursor: crosshair;
+      border: 2px solid #ccc; border-radius: 4px; overflow: hidden;
+    }
+    .source-container img {
+      display: block; max-width: 700px; height: auto;
+    }
+    .crop-overlay {
+      position: absolute; border: 2px solid; pointer-events: none;
+      opacity: 0.7;
+    }
+    .crop-overlay.distractor { border-color: #1565c0; background: rgba(21,101,192,0.15); }
+    .crop-overlay.oddball { border-color: #e53935; background: rgba(229,57,53,0.15); }
+    .crop-overlay .crop-label {
+      position: absolute; top: 2px; left: 2px;
+      font-size: 11px; font-weight: 700; padding: 1px 4px;
+      border-radius: 3px; color: #fff;
+    }
+    .crop-overlay.distractor .crop-label { background: #1565c0; }
+    .crop-overlay.oddball .crop-label { background: #e53935; }
+
+    .preview-row {
+      display: flex; gap: 14px; margin-top: 12px; min-height: 320px;
+      align-items: flex-start; flex-wrap: wrap;
+    }
+    .preview-item {
+      text-align: center; cursor: pointer; position: relative;
+      border: 3px solid transparent; border-radius: 6px;
+      transition: border-color 0.15s;
+    }
+    .preview-item:hover { border-color: #e53935; }
+    .preview-item canvas {
+      display: block; border-radius: 3px;
+      width: 300px; height: 300px;
+    }
+    .preview-item .label {
+      font-size: 13px; color: #666; margin-top: 4px;
+    }
+    .preview-item .remove-hint {
+      font-size: 11px; color: #e53935; margin-top: 2px;
+    }
+
+    .export-bar {
+      text-align: center; margin: 30px 0; display: flex;
+      gap: 12px; justify-content: center;
+    }
+    .export-bar button {
+      padding: 10px 28px; font-size: 14px; font-weight: 600;
+      background: #1565c0; color: #fff; border: none;
+      border-radius: 6px; cursor: pointer;
+    }
+    .export-bar button:hover { background: #0d47a1; }
+    .export-bar button.secondary {
+      background: #fff; color: #1565c0; border: 2px solid #1565c0;
+    }
+    .export-bar button.secondary:hover { background: #e3f2fd; }
+    .export-bar button.danger {
+      background: #fff; color: #e53935; border: 2px solid #e53935;
+    }
+    .export-bar button.danger:hover { background: #ffebee; }
+
+    .empty-msg {
+      color: #999; font-style: italic; font-size: 13px; padding: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Click-to-Crop Tool</h1>
+  <p class="page-info">Click on source images to place crop regions. Click previews to remove them.</p>
+  <div class="nav-bar" id="nav-bar"></div>
+  <div id="trials-container"></div>
+
+  <div class="export-bar">
+    <button class="secondary" onclick="exportJSON()">Export JSON</button>
+    <button class="danger" onclick="clearAll()">Clear All</button>
+  </div>
+
+  <script>
+    const TRIALS = [
+  {
+    "trial_id": 1,
+    "category": "rhinestone",
+    "same3_image": "2460",
+    "diff1_category": "rhinestone",
+    "diff1_image": "2458",
+    "crop_source_size": 300,
+    "notes": "",
+    "folder": "trial_01_rhinestone",
+    "same3_src": "trial_01_rhinestone/source_same3_full.jpg",
+    "diff1_src": "trial_01_rhinestone/source_diff1_full.jpg",
+    "same3_w": 2015,
+    "same3_h": 2015,
+    "diff1_w": 800,
+    "diff1_h": 800
+  },
+  {
+    "trial_id": 2,
+    "category": "obsidian",
+    "same3_image": "1895",
+    "diff1_category": "obsidian",
+    "diff1_image": "1892",
+    "crop_source_size": 300,
+    "notes": "",
+    "folder": "trial_02_obsidian",
+    "same3_src": "trial_02_obsidian/source_same3_full.jpg",
+    "diff1_src": "trial_02_obsidian/source_diff1_full.jpg",
+    "same3_w": 3210,
+    "same3_h": 3210,
+    "diff1_w": 3210,
+    "diff1_h": 3210
+  },
+  {
+    "trial_id": 3,
+    "category": "nylon",
+    "same3_image": "1882",
+    "diff1_category": "nylon",
+    "diff1_image": "1880",
+    "crop_source_size": 300,
+    "notes": "",
+    "folder": "trial_03_nylon",
+    "same3_src": "trial_03_nylon/source_same3_full.jpg",
+    "diff1_src": "trial_03_nylon/source_diff1_full.jpg",
+    "same3_w": 698,
+    "same3_h": 698,
+    "diff1_w": 897,
+    "diff1_h": 897
+  },
+  {
+    "trial_id": 4,
+    "category": "lead",
+    "same3_image": "1626",
+    "diff1_category": "lead",
+    "diff1_image": "1627",
+    "crop_source_size": 300,
+    "notes": "",
+    "folder": "trial_04_lead",
+    "same3_src": "trial_04_lead/source_same3_full.jpg",
+    "diff1_src": "trial_04_lead/source_diff1_full.jpg",
+    "same3_w": 650,
+    "same3_h": 650,
+    "diff1_w": 1080,
+    "diff1_h": 1080
+  },
+  {
+    "trial_id": 5,
+    "category": "latex",
+    "same3_image": "1581",
+    "diff1_category": "latex",
+    "diff1_image": "1582",
+    "crop_source_size": 300,
+    "notes": "",
+    "folder": "trial_05_latex",
+    "same3_src": "trial_05_latex/source_same3_full.jpg",
+    "diff1_src": "trial_05_latex/source_diff1_full.jpg",
+    "same3_w": 786,
+    "same3_h": 786,
+    "diff1_w": 1000,
+    "diff1_h": 1000
+  },
+  {
+    "trial_id": 6,
+    "category": "jade",
+    "same3_image": "1528",
+    "diff1_category": "amber",
+    "diff1_image": "0053",
+    "crop_source_size": 400,
+    "notes": "cross-category oddball",
+    "folder": "trial_06_jade",
+    "same3_src": "trial_06_jade/source_same3_full.jpg",
+    "diff1_src": "trial_06_jade/source_diff1_full.jpg",
+    "same3_w": 600,
+    "same3_h": 600,
+    "diff1_w": 960,
+    "diff1_h": 960
+  },
+  {
+    "trial_id": 7,
+    "category": "ice",
+    "same3_image": "1450",
+    "diff1_category": "ice",
+    "diff1_image": "1467",
+    "crop_source_size": 300,
+    "notes": "",
+    "folder": "trial_07_ice",
+    "same3_src": "trial_07_ice/source_same3_full.jpg",
+    "diff1_src": "trial_07_ice/source_diff1_full.jpg",
+    "same3_w": 800,
+    "same3_h": 800,
+    "diff1_w": 2445,
+    "diff1_h": 2445
+  },
+  {
+    "trial_id": 8,
+    "category": "horn",
+    "same3_image": "1440",
+    "diff1_category": "horn",
+    "diff1_image": "1439",
+    "crop_source_size": 300,
+    "notes": "",
+    "folder": "trial_08_horn",
+    "same3_src": "trial_08_horn/source_same3_full.jpg",
+    "diff1_src": "trial_08_horn/source_diff1_full.jpg",
+    "same3_w": 600,
+    "same3_h": 600,
+    "diff1_w": 600,
+    "diff1_h": 600
+  },
+  {
+    "trial_id": 9,
+    "category": "gold",
+    "same3_image": "1321",
+    "diff1_category": "gold",
+    "diff1_image": "1322",
+    "crop_source_size": 300,
+    "notes": "",
+    "folder": "trial_09_gold",
+    "same3_src": "trial_09_gold/source_same3_full.jpg",
+    "diff1_src": "trial_09_gold/source_diff1_full.jpg",
+    "same3_w": 800,
+    "same3_h": 800,
+    "diff1_w": 616,
+    "diff1_h": 616
+  },
+  {
+    "trial_id": 10,
+    "category": "garnet",
+    "same3_image": "1240",
+    "diff1_category": "garnet",
+    "diff1_image": "1234",
+    "crop_source_size": 300,
+    "notes": "",
+    "folder": "trial_10_garnet",
+    "same3_src": "trial_10_garnet/source_same3_full.jpg",
+    "diff1_src": "trial_10_garnet/source_diff1_full.jpg",
+    "same3_w": 900,
+    "same3_h": 900,
+    "diff1_w": 2136,
+    "diff1_h": 2136
+  },
+  {
+    "trial_id": 11,
+    "category": "flint",
+    "same3_image": "1093",
+    "diff1_category": "flint",
+    "diff1_image": "1085",
+    "crop_source_size": 500,
+    "notes": "",
+    "folder": "trial_11_flint",
+    "same3_src": "trial_11_flint/source_same3_full.jpg",
+    "diff1_src": "trial_11_flint/source_diff1_full.jpg",
+    "same3_w": 1341,
+    "same3_h": 1341,
+    "diff1_w": 2336,
+    "diff1_h": 2336
+  },
+  {
+    "trial_id": 12,
+    "category": "fat",
+    "same3_image": "0953",
+    "diff1_category": "fat",
+    "diff1_image": "0962",
+    "crop_source_size": 400,
+    "notes": "",
+    "folder": "trial_12_fat",
+    "same3_src": "trial_12_fat/source_same3_full.jpg",
+    "diff1_src": "trial_12_fat/source_diff1_full.jpg",
+    "same3_w": 683,
+    "same3_h": 683,
+    "diff1_w": 600,
+    "diff1_h": 600
+  },
+  {
+    "trial_id": 13,
+    "category": "ember",
+    "same3_image": "0930",
+    "diff1_category": "ember",
+    "diff1_image": "0932",
+    "crop_source_size": 400,
+    "notes": "",
+    "folder": "trial_13_ember",
+    "same3_src": "trial_13_ember/source_same3_full.jpg",
+    "diff1_src": "trial_13_ember/source_diff1_full.jpg",
+    "same3_w": 1118,
+    "same3_h": 1118,
+    "diff1_w": 2918,
+    "diff1_h": 2918
+  },
+  {
+    "trial_id": 14,
+    "category": "egg_shell",
+    "same3_image": "0898",
+    "diff1_category": "cork",
+    "diff1_image": "0783",
+    "crop_source_size": 300,
+    "notes": "cross-category oddball",
+    "folder": "trial_14_egg_shell",
+    "same3_src": "trial_14_egg_shell/source_same3_full.jpg",
+    "diff1_src": "trial_14_egg_shell/source_diff1_full.jpg",
+    "same3_w": 2200,
+    "same3_h": 2200,
+    "diff1_w": 1440,
+    "diff1_h": 1440
+  },
+  {
+    "trial_id": 15,
+    "category": "glue",
+    "same3_image": "1298",
+    "diff1_category": "glue",
+    "diff1_image": "1295",
+    "crop_source_size": 400,
+    "notes": "",
+    "folder": "trial_15_glue",
+    "same3_src": "trial_15_glue/source_same3_full.jpg",
+    "diff1_src": "trial_15_glue/source_diff1_full.jpg",
+    "same3_w": 960,
+    "same3_h": 960,
+    "diff1_w": 2304,
+    "diff1_h": 2304
+  },
+  {
+    "trial_id": 16,
+    "category": "obsidian",
+    "same3_image": "1908",
+    "diff1_category": "obsidian",
+    "diff1_image": "1906",
+    "crop_source_size": 400,
+    "notes": "second obsidian pair",
+    "folder": "trial_16_obsidian",
+    "same3_src": "trial_16_obsidian/source_same3_full.jpg",
+    "diff1_src": "trial_16_obsidian/source_diff1_full.jpg",
+    "same3_w": 5319,
+    "same3_h": 5319,
+    "diff1_w": 1438,
+    "diff1_h": 1438
+  },
+  {
+    "trial_id": 17,
+    "category": "glue",
+    "same3_image": "1298",
+    "diff1_category": "glue",
+    "diff1_image": "1303",
+    "crop_source_size": 400,
+    "notes": "compare against glue/1295",
+    "folder": "trial_17_glue",
+    "same3_src": "trial_17_glue/source_same3_full.jpg",
+    "diff1_src": "trial_17_glue/source_diff1_full.jpg",
+    "same3_w": 960,
+    "same3_h": 960,
+    "diff1_w": 1680,
+    "diff1_h": 1680
+  }
+];
+    const CROP_SIZE = 200;
+
+    // State: { trialId: { distractors: [{x, y}], oddballs: [{x, y}] } }
+    let state = {};
+
+    // ── Build UI ──────────────────────────────────────────────────────────────
+
+    function buildUI() {
+      const nav = document.getElementById('nav-bar');
+      const container = document.getElementById('trials-container');
+      let navHtml = '';
+
+      for (const t of TRIALS) {
+        const tid = t.trial_id;
+        navHtml += `<a href="#trial-${tid}" id="nav-${tid}">T${tid}</a>`;
+
+        const notesHtml = t.notes ? `<span class="notes">(${t.notes})</span>` : '';
+        const block = document.createElement('div');
+        block.className = 'trial-block';
+        block.id = `trial-${tid}`;
+        block.innerHTML = `
+          <h2>Trial ${tid}: ${t.category} ${notesHtml}</h2>
+          <div class="source-info">
+            Distractors from: <strong>${t.category}/${t.same3_image}</strong> &nbsp;|&nbsp;
+            Oddball from: <strong>${t.diff1_category}/${t.diff1_image}</strong> &nbsp;|&nbsp;
+            Source crop: <strong>${t.crop_source_size}&times;${t.crop_source_size}</strong>
+            &rarr; ${CROP_SIZE}&times;${CROP_SIZE}
+          </div>
+          <div class="image-panels">
+            <div class="image-panel">
+              <h3>Same3 (distractors)
+                <span class="count-badge" id="count-dist-${tid}">0/3</span>
+              </h3>
+              <div class="source-container" id="src-same3-${tid}"
+                   data-trial="${tid}" data-role="same3"
+                   data-natw="${t.same3_w}" data-nath="${t.same3_h}"
+                   data-cropsize="${t.crop_source_size}">
+                <img src="${t.same3_src}" draggable="false">
+              </div>
+              <div class="preview-row" id="prev-dist-${tid}">
+                <p class="empty-msg">Click the image above to place crops</p>
+              </div>
+            </div>
+            <div class="image-panel">
+              <h3>Diff1 (oddballs)
+                <span class="count-badge" id="count-odd-${tid}">0/3</span>
+              </h3>
+              <div class="source-container" id="src-diff1-${tid}"
+                   data-trial="${tid}" data-role="diff1"
+                   data-natw="${t.diff1_w}" data-nath="${t.diff1_h}"
+                   data-cropsize="${t.crop_source_size}">
+                <img src="${t.diff1_src}" draggable="false">
+              </div>
+              <div class="preview-row" id="prev-odd-${tid}">
+                <p class="empty-msg">Click the image above to place crops</p>
+              </div>
+            </div>
+          </div>
+        `;
+        container.appendChild(block);
+      }
+
+      nav.innerHTML = navHtml;
+
+      // Attach click handlers after images load
+      document.querySelectorAll('.source-container').forEach(sc => {
+        const img = sc.querySelector('img');
+        img.addEventListener('load', () => setupClick(sc));
+        if (img.complete) setupClick(sc);
+      });
+    }
+
+    // ── Click handler on source images ────────────────────────────────────────
+
+    function setupClick(container) {
+      // Only attach once
+      if (container.dataset.ready) return;
+      container.dataset.ready = '1';
+
+      container.addEventListener('click', (e) => {
+        const img = container.querySelector('img');
+        const rect = img.getBoundingClientRect();
+        const displayW = rect.width;
+        const displayH = rect.height;
+        const natW = parseInt(container.dataset.natw);
+        const natH = parseInt(container.dataset.nath);
+        const cropSize = parseInt(container.dataset.cropsize);
+        const tid = parseInt(container.dataset.trial);
+        const role = container.dataset.role;
+
+        // Scale factor: display -> original
+        const scaleX = natW / displayW;
+        const scaleY = natH / displayH;
+
+        // Click position in original-image pixels
+        const clickX = (e.clientX - rect.left) * scaleX;
+        const clickY = (e.clientY - rect.top) * scaleY;
+
+        // Center crop on click, clamp to image bounds
+        let x = Math.round(clickX - cropSize / 2);
+        let y = Math.round(clickY - cropSize / 2);
+        x = Math.max(0, Math.min(x, natW - cropSize));
+        y = Math.max(0, Math.min(y, natH - cropSize));
+
+        // Check limits
+        const key = role === 'same3' ? 'distractors' : 'oddballs';
+        if (!state[tid]) state[tid] = { distractors: [], oddballs: [] };
+        if (state[tid][key].length >= 3) {
+          alert(`Already have 3 ${key} for trial ${tid}. Remove one first.`);
+          return;
+        }
+
+        state[tid][key].push({ x, y });
+        renderTrial(tid);
+        saveState();
+      });
+    }
+
+    // ── Render overlays and previews for a trial ──────────────────────────────
+
+    function renderTrial(tid) {
+      const trial = TRIALS.find(t => t.trial_id === tid);
+      if (!trial) return;
+      const ts = state[tid] || { distractors: [], oddballs: [] };
+
+      // Render both panels
+      renderPanel(tid, 'same3', 'distractors', trial.same3_src,
+                  trial.same3_w, trial.same3_h, trial.crop_source_size, ts.distractors);
+      renderPanel(tid, 'diff1', 'oddballs', trial.diff1_src,
+                  trial.diff1_w, trial.diff1_h, trial.crop_source_size, ts.oddballs);
+
+      // Update counts
+      const distBadge = document.getElementById(`count-dist-${tid}`);
+      distBadge.textContent = `${ts.distractors.length}/3`;
+      distBadge.classList.toggle('complete', ts.distractors.length === 3);
+
+      const oddBadge = document.getElementById(`count-odd-${tid}`);
+      oddBadge.textContent = `${ts.oddballs.length}/3`;
+      oddBadge.classList.toggle('complete', ts.oddballs.length >= 1);
+
+      // Update nav
+      updateNav(tid);
+    }
+
+    function renderPanel(tid, role, key, imgSrc, natW, natH, cropSize, crops) {
+      const container = document.getElementById(`src-${role}-${tid}`);
+      const img = container.querySelector('img');
+
+      // Remove old overlays
+      container.querySelectorAll('.crop-overlay').forEach(o => o.remove());
+
+      // Display scale
+      const displayW = img.clientWidth;
+      const displayH = img.clientHeight;
+      const scaleX = displayW / natW;
+      const scaleY = displayH / natH;
+
+      const overlayClass = key === 'distractors' ? 'distractor' : 'oddball';
+      const labelPrefix = key === 'distractors' ? 'D' : 'O';
+
+      crops.forEach((crop, i) => {
+        const ov = document.createElement('div');
+        ov.className = `crop-overlay ${overlayClass}`;
+        ov.style.left = (crop.x * scaleX) + 'px';
+        ov.style.top = (crop.y * scaleY) + 'px';
+        ov.style.width = (cropSize * scaleX) + 'px';
+        ov.style.height = (cropSize * scaleY) + 'px';
+        ov.innerHTML = `<span class="crop-label">${labelPrefix}${i + 1}</span>`;
+        container.appendChild(ov);
+      });
+
+      // Render previews
+      const prevId = key === 'distractors' ? `prev-dist-${tid}` : `prev-odd-${tid}`;
+      const prevRow = document.getElementById(prevId);
+
+      if (crops.length === 0) {
+        prevRow.innerHTML = '<p class="empty-msg">Click the image above to place crops</p>';
+        return;
+      }
+
+      prevRow.innerHTML = '';
+      crops.forEach((crop, i) => {
+        const item = document.createElement('div');
+        item.className = 'preview-item';
+        item.title = 'Click to remove';
+
+        const canvas = document.createElement('canvas');
+        canvas.width = CROP_SIZE;
+        canvas.height = CROP_SIZE;
+        item.appendChild(canvas);
+
+        const label = document.createElement('div');
+        label.className = 'label';
+        label.textContent = `${labelPrefix}${i + 1} (${crop.x}, ${crop.y})`;
+        item.appendChild(label);
+
+        const hint = document.createElement('div');
+        hint.className = 'remove-hint';
+        hint.textContent = 'click to remove';
+        item.appendChild(hint);
+
+        // Remove handler
+        item.addEventListener('click', () => {
+          state[tid][key].splice(i, 1);
+          renderTrial(tid);
+          saveState();
+        });
+
+        prevRow.appendChild(item);
+
+        // Draw grayscale crop on canvas
+        drawGrayscaleCrop(canvas, img, crop.x, crop.y, cropSize, natW, natH);
+      });
+    }
+
+    function drawGrayscaleCrop(canvas, sourceImg, x, y, cropSize, natW, natH) {
+      // Use an offscreen canvas at native resolution to extract the crop
+      const offscreen = document.createElement('canvas');
+      offscreen.width = natW;
+      offscreen.height = natH;
+      const offCtx = offscreen.getContext('2d');
+      offCtx.drawImage(sourceImg, 0, 0, natW, natH);
+
+      // Extract crop region and downscale to CROP_SIZE
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(offscreen, x, y, cropSize, cropSize, 0, 0, CROP_SIZE, CROP_SIZE);
+
+      // Apply grayscale
+      const imageData = ctx.getImageData(0, 0, CROP_SIZE, CROP_SIZE);
+      const data = imageData.data;
+      for (let i = 0; i < data.length; i += 4) {
+        const gray = Math.round(0.2989 * data[i] + 0.587 * data[i + 1] + 0.114 * data[i + 2]);
+        data[i] = data[i + 1] = data[i + 2] = gray;
+      }
+      ctx.putImageData(imageData, 0, 0);
+    }
+
+    // ── Nav badges ────────────────────────────────────────────────────────────
+
+    function updateNav(tid) {
+      const ts = state[tid] || { distractors: [], oddballs: [] };
+      const link = document.getElementById(`nav-${tid}`);
+      if (link) {
+        link.classList.toggle('complete', ts.distractors.length === 3 && ts.oddballs.length >= 1);
+      }
+    }
+
+    // ── Persistence ───────────────────────────────────────────────────────────
+
+    function saveState() {
+      localStorage.setItem('click_crop_state', JSON.stringify(state));
+    }
+
+    function loadState() {
+      const raw = localStorage.getItem('click_crop_state');
+      if (!raw) return;
+      try {
+        state = JSON.parse(raw);
+        for (const tid of Object.keys(state)) {
+          renderTrial(parseInt(tid));
+        }
+      } catch (e) {
+        console.error('Failed to load state:', e);
+      }
+    }
+
+    // ── Export ─────────────────────────────────────────────────────────────────
+
+    function exportJSON() {
+      const out = {};
+      for (const t of TRIALS) {
+        const tid = t.trial_id;
+        const ts = state[tid];
+        if (!ts) continue;
+        if (ts.distractors.length === 0 && ts.oddballs.length === 0) continue;
+        out[`trial_${tid}`] = {
+          crop_source_size: t.crop_source_size,
+          distractors: ts.distractors.map(c => ({ x: c.x, y: c.y })),
+          oddballs: ts.oddballs.map(c => ({ x: c.x, y: c.y })),
+        };
+      }
+      download('click_crop_selections.json', out);
+    }
+
+    function download(filename, data) {
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = filename; a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function clearAll() {
+      if (!confirm('Clear all crop selections? This cannot be undone.')) return;
+      state = {};
+      localStorage.removeItem('click_crop_state');
+      for (const t of TRIALS) renderTrial(t.trial_id);
+    }
+
+    // ── Re-render overlays on window resize ───────────────────────────────────
+
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        for (const tid of Object.keys(state)) renderTrial(parseInt(tid));
+      }, 200);
+    });
+
+    // ── Init ──────────────────────────────────────────────────────────────────
+
+    buildUI();
+    // Wait for all images to load, then restore state
+    window.addEventListener('load', loadState);
+  </script>
+</body>
+</html>

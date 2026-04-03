@@ -1,0 +1,13 @@
+trial_id: 17
+category: glue
+same3_source: glue/1298
+diff1_source: glue/1303
+min_dist: 200
+normalize: False
+notes: compare against glue/1295
+
+distractor crops (x, y):
+  distractor_1: (177, 428)
+  distractor_2: (205, 663)
+  distractor_3: (363, 207)
+  oddball: (57, 384)

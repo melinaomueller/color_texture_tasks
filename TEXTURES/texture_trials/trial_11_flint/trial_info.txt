@@ -1,0 +1,13 @@
+trial_id: 11
+category: flint
+same3_source: flint/1093
+diff1_source: flint/1085
+min_dist: 200
+normalize: False
+notes: 
+
+distractor crops (x, y):
+  distractor_1: (797, 885)
+  distractor_2: (421, 662)
+  distractor_3: (1042, 122)
+  oddball: (1113, 980)

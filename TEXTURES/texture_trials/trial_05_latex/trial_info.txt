@@ -1,0 +1,13 @@
+trial_id: 5
+category: latex
+same3_source: latex/1581
+diff1_source: latex/1582
+min_dist: 200
+normalize: False
+notes: 
+
+distractor crops (x, y):
+  distractor_1: (135, 327)
+  distractor_2: (264, 584)
+  distractor_3: (23, 59)
+  oddball: (720, 775)

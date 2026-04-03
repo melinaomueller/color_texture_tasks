@@ -1,0 +1,13 @@
+trial_id: 14
+category: egg_shell
+same3_source: egg_shell/0898
+diff1_source: cork/0783
+min_dist: 200
+normalize: False
+notes: cross-category oddball
+
+distractor crops (x, y):
+  distractor_1: (1877, 484)
+  distractor_2: (399, 1216)
+  distractor_3: (1442, 1259)
+  oddball: (1146, 654)
